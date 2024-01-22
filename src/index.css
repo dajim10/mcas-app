@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;500;600&display=swap');
+
+:root {
+    --primary-color:#ffcc00; /* Replace with your desired primary color */
+  }
+  
+  /* Optional: Override other Bootstrap colors as needed */
+  :root {
+    /* --primary: #ffcc99; */
+    --secondary: #your-secondary-color;
+    --success: rgb(69, 176, 69);
+    --info: #your-info-color;
+    --warning: #ffcc00;
+    --danger: #your-danger-color;
+    --light: #f1f0f0;
+    --dark: #383838;
+    --primary: #001b54;
+  }
+
+
+  
+  /* Apply the custom colors to Bootstrap components */
+  * {
+    font-family: 'Noto Sans Thai', sans-serif;
+    
+  }
+
+  .field-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+  .bg-success {
+    background-color: var(--success);
+  }
+
+  .card {
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    border:none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--warning);
+    border-color: var(--primary);
+    border :none;
+    color: var(--dark);
+  }
+
+  li {
+    list-style: none;
+    justify-content: start;
+    border-bottom: 1px solid var(--light);
+
+  }
+  /* You can add more styles as needed */
+  
+  /* @media screen and (max-width: 768px) {
+    #myNavbar {
+      position: absolute;
+      bottom:0;
+      width: 100%;
+    }
+    #myNavbar .navbar-nav {
+      text-align: center;
+      width: 100%;
+      margin: 0;
+    }
+    #myNavbar .navbar-brand{
+      display:none;
+    }
+  } */
+
+  #back {
+    position: fixed;
+    top:95%;
+    left: 10%;
+    transform: translate(-50%, -0%);
+    height:100px;
+  }
+
+  @media screen and (max-width: 768px) {
+    #back {
+      position: fixed;
+      top:95%;
+      left: 15%;
+      transform: translate(-50%, -0%);
+      height:100px;
+    }
+    
+  }
+
+  
