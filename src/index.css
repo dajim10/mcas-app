@@ -22,6 +22,7 @@
   /* Apply the custom colors to Bootstrap components */
   * {
     font-family: 'Noto Sans Thai', sans-serif;
+    line-height: 2.5rem;
     
   }
 

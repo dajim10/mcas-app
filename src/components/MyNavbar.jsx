@@ -4,6 +4,9 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import McasLogo from '../assets/rutsMcasLogo.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+
 
 const MyNavbar = () => {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -49,20 +52,24 @@ const MyNavbar = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         {loggedIn && (
                             <Nav className="me-auto">
-                                <LinkContainer to="/class">
-                                    <Nav.Link>Classroom</Nav.Link>
+                                <LinkContainer to="/">
+                                    <Nav.Link><FontAwesomeIcon icon={faHouse} />
+                                        {' '}หน้าแรก</Nav.Link>
+                                </LinkContainer>
+                                <LinkContainer to="/classroomlist">
+                                    <Nav.Link><FontAwesomeIcon icon={faGraduationCap} /> {' '}รายชื่อห้องเรียน</Nav.Link>
                                 </LinkContainer>
                                 <LinkContainer to="/about">
-                                    <Nav.Link>About</Nav.Link>
+                                    <Nav.Link><FontAwesomeIcon icon={faCircleInfo} />{' '}ผู้พัฒนาระบบ</Nav.Link>
                                 </LinkContainer>
                             </Nav>
                         )}
                         <Nav>
                             {loggedIn ? (
-                                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                                <Nav.Link onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} />{' '}Logout</Nav.Link>
                             ) : (
                                 <LinkContainer to="/login">
-                                    <Nav.Link>Login</Nav.Link>
+                                    <Nav.Link><FontAwesomeIcon icon={faKey} />{' '}Login</Nav.Link>
                                 </LinkContainer>
                             )}
                         </Nav>

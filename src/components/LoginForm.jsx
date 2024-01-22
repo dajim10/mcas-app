@@ -91,7 +91,7 @@ const LoginForm = () => {
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
-                                        placeholder='user.n ไม่ต้องใส่ @rmutsv.ac.th'
+                                        placeholder='e-passport'
                                         autoFocus
                                     />
                                 </div>
@@ -102,7 +102,7 @@ const LoginForm = () => {
                                             type={showPassword ? 'text' : 'password'}
                                             className="form-control"
                                             id="password"
-                                            placeholder="Enter your password"
+                                            placeholder="password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />

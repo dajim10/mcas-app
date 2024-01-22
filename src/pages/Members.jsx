@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,6 +11,7 @@ const Members = () => {
     const { classid } = useParams();
     const token = localStorage.getItem('token');
     const [members, setMembers] = useState([]);
+    const navigate = useNavigate();
 
 
     const getStatusTextClass = (status) => {
@@ -79,7 +80,8 @@ const Members = () => {
                     <div className="col-lg-4 col-md mx-auto p-2" key={member.id}>
                         <div className={`card h-100 `}>
                             <div className="card-body">
-                                {/* <img src={member.avatar} className="avatar" alt="..." /> */}
+                                <img src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png' className="rounded-pill shadow" width={50} alt="..." />
+
                                 <p className="card-title">ชื่อ-สกุล :
                                     <span>{member.fname} {member.lname}</span>
                                 </p>
@@ -87,7 +89,7 @@ const Members = () => {
                                 <p className="card-text"><FontAwesomeIcon icon={faEnvelope} /> {member.email}</p>
 
                                 <div style={{ position: 'absolute', bottom: '5px', right: '5px' }}>
-                                    <p className="card-text">GPA. : {member.gpa}</p>
+                                    <small className="btn btn-outline-dark rounded-5 ">GPA. : {member.gpa}</small>
                                 </div>
                                 <div style={{ position: 'absolute', top: '5px', right: '5px' }}>
 

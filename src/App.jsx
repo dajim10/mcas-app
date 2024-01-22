@@ -5,10 +5,11 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
-import Class from './components/Class';
+import ClassRoomList from './components/ClassRoomList';
 import MyNavbar from './components/MyNavbar';
 import About from './components/about'
 import Members from './pages/Members';
+import Footer from './components/Footer';
 
 
 
@@ -46,10 +47,11 @@ const App = () => {
           <Route path="/" element={<Home token={token} />} />
           <Route path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
           <Route path="/about" element={<About />} />
-          <Route path="/class" element={<Class />} />
+          <Route path="/classroomlist" element={<ClassRoomList />} />
           <Route path="/members/:classid" element={<Members />} />
         </Routes>
       </Container>
+      <Footer />
 
     </>
   );
