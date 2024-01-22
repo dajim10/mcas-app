@@ -12,6 +12,7 @@ const Home = () => {
     const [student, setStudent] = useState([]);
 
 
+
     const selectClassrom = (classRoomId) => {
         setClassRoomId(classRoomId);
         console.log(classRoomId);
@@ -30,6 +31,7 @@ const Home = () => {
             setClassRoom(data.class);
 
         }
+
         fetchClassRoom();
     }
         , [token]);
@@ -53,7 +55,7 @@ const Home = () => {
 
             {/* </p> */}
 
-            <p className='display-6'>รายชื่อห้องที่ปรึกษา</p>
+            <p className='display-6'>รายชื่อห้องเรียน</p>
 
             <div className="row">
                 {classRoom.map((classroom, index) => (

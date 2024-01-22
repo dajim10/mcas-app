@@ -14,6 +14,9 @@ const MyNavbar = () => {
     const token = localStorage.getItem('token');
 
 
+
+
+
     useEffect(() => {
         // Check if the user is logged in
         if (token) {
@@ -35,7 +38,7 @@ const MyNavbar = () => {
     return (
         <>
 
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="light" expand="lg" className='sticky-top'>
                 <div className="container">
                     <LinkContainer to="/">
                         <Navbar.Brand>

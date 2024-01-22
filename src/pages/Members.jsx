@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faEnvelope, faChevronLeft } from '@fortawesome/fontawesome-free-solid'
+import { faEnvelope, faChevronLeft, faClone } from '@fortawesome/fontawesome-free-solid'
 
 const Members = () => {
 
@@ -13,16 +14,30 @@ const Members = () => {
     const [members, setMembers] = useState([]);
     const navigate = useNavigate();
 
+    const copyToClipboard = (text) => {
+        // e.preventDefault();
+        const value = text;
+        console.log(value);
+        navigator.clipboard.writeText(value);
+        Swal.fire({
+            title: 'Copy to clipboard',
+            text: 'คัดลอกไปยังคลิปบอร์ดแล้ว',
+            icon: 'success',
+            confirmButtonText: 'Cool'
+        })
+
+    }
+
 
     const getStatusTextClass = (status) => {
         switch (status) {
             case 'R':
                 return 'btn-success';
-            case 'C1':
-                return 'btn-warning';
-            // Add more cases for other status types
+            case 'WITHDRAW' || 'CHEAT':
+                return 'btn-danger';
+
             default:
-                return 'btn-light'; // Default color for unknown status
+                return 'btn-warning'; // Default color for unknown status
         }
     };
 
@@ -75,25 +90,60 @@ const Members = () => {
 
                 </div>
             </div>
+            <div className="row sticky-top">
+                <div className="col mx-auto">
+                    <div className="card">
+                        <div className="card-body text-center">
+                            <h5 className="card-title">จำนวนนักศึกษาทั้งหมด {members.length}</h5>
+
+                            <h5 className="card-title btn btn-success text-light rounded-pill p-2 m-2">ปกติ : {' '}
+                                {members.filter((member) => member.status === 'R').length}
+                            </h5>
+
+                            <h5 className="card-title btn btn-warning rounded-pill p-2 m-2">วิกฤติ : {' '}
+                                {members.filter((member) => member.status === 'C1').length}
+                            </h5>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div className="row">
                 {members.map((member, index) => (
                     <div className="col-lg-4 col-md mx-auto p-2" key={member.id}>
                         <div className={`card h-100 `}>
                             <div className="card-body">
+
+
                                 <img src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png' className="rounded-pill shadow" width={50} alt="..." />
 
                                 <p className="card-title">ชื่อ-สกุล :
                                     <span>{member.fname} {member.lname}</span>
                                 </p>
-                                <h6 className="card-subtitle mb-2 text-muted">รหัสนักศึกษา : <span>{member.id}</span></h6>
-                                <p className="card-text"><FontAwesomeIcon icon={faEnvelope} /> {member.email}</p>
+                                <h6 className="card-subtitle mb-2 text-muted">รหัสนักศึกษา : <span>{member.id}</span>
+                                    {' '}
+                                    <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.id)} />
+                                </h6>
+                                {/* <form onSubmit={copyToClipboard}> */}
+
+                                <p className="card-text" ><FontAwesomeIcon icon={faEnvelope} /> {member.email}
+                                    {' '}
+                                    <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.email)} />
+                                    {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
+                                </p>
+
+
+                                {/* </form> */}
 
                                 <div style={{ position: 'absolute', bottom: '5px', right: '5px' }}>
                                     <small className="btn btn-outline-dark rounded-5 ">GPA. : {member.gpa}</small>
                                 </div>
                                 <div style={{ position: 'absolute', top: '5px', right: '5px' }}>
 
-                                    <button className={`btn ${getStatusTextClass(member.status)} rounded-pill`}>{member.status === 'C1' ? 'รอพินิจ' : 'ปกติ'}</button>
+                                    <button className={`btn ${getStatusTextClass(member.status)} rounded-pill`}>{member.statusname}</button>
+                                    {/* {member.status === 'C1' ? 'รอพินิจ' : 'ปกติ'}</button> */}
                                 </div>
                             </div>
                         </div>
@@ -101,28 +151,7 @@ const Members = () => {
                 ))}
 
             </div>
-            <div className="row">
-                <div className="col mx-auto">
-                    <div className="card">
-                        <div className="card-body text-center">
-                            <h5 className="card-title">จำนวนนักศึกษาทั้งหมด {members.length}</h5>
-                            {/* <h6 className="card-subtitle mb-2 text-muted">{members.length}</h6> */}
-                            {/* จำนวนนักศึกษา Status = R */}
-                            <h5 className="card-title btn btn-success text-light rounded-pill p-2 m-2">ปกติ : {' '}
-                                {members.filter((member) => member.status === 'R').length}
-                            </h5>
-                            {/* <h6 className="card-subtitle mb-2 text-muted">{members.filter((member) => member.status === 'R').length}</h6> */}
-                            {/* จำนวนนักศึกษา Status = C1 */}
-                            <h5 className="card-title btn btn-warning rounded-pill p-2 m-2">รอพินิจ : {' '}
-                                {members.filter((member) => member.status === 'C1').length}
-                            </h5>
 
-                            {/* <h6 className="card-subtitle mb-2 text-muted">{members.filter((member) => member.status === 'C1').length}</h6> */}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
             <div id="back">
                 <Link to="/" className="btn btn-primary">
                     <FontAwesomeIcon icon={faChevronLeft} /> กลับหน้าหลัก

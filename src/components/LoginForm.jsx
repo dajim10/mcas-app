@@ -19,7 +19,10 @@ const LoginForm = () => {
     useEffect(() => {
         // Check if the user is logged in
         if (token) {
-            navigate('/')
+            // redirect the user to the home page if they are already logged in send them to the home page
+
+            // navigate('/') 
+
         }
     }
         , [token]);

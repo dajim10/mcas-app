@@ -36,7 +36,7 @@ const ClassRoomList = () => {
 
     return (
         <div className='container'>
-            <p className='display-6'>รายชื่อห้องที่ปรึกษา</p>
+            <p className='display-6'>รายชื่อห้องเรียน</p>
 
             <div className="row">
                 {classRoom.map((classroom, index) => (
