@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import BarChart from '../components/BarChart'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -97,6 +98,7 @@ const Members = () => {
     return (
         <>
             {/* search input */}
+            {/* <BarChart /> */}
             <div className="container-fluid sticky-top">
                 <div className="row py-3"
                     style={{
