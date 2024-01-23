@@ -12,6 +12,7 @@ const Members = () => {
     const { classid } = useParams();
     const token = localStorage.getItem('token');
     const [members, setMembers] = useState([]);
+    const [memberSummary, setMemberSummary] = useState([]);
     const navigate = useNavigate();
 
     const copyToClipboard = (text) => {
@@ -23,8 +24,10 @@ const Members = () => {
             title: 'Copy to clipboard',
             text: 'คัดลอกไปยังคลิปบอร์ดแล้ว',
             icon: 'success',
-            confirmButtonText: 'Cool'
+            timer: 1000,
+            showConfirmButton: false,
         })
+
 
     }
 
@@ -67,6 +70,16 @@ const Members = () => {
         console.log(data.members);
     }
 
+    const fetchMemberSummary = async () => {
+        // https://api.rmutsv.ac.th/teacher/trace/404141NM_66/kitisak.w:bw6uP7dmTocCxQ0rSxPZyMxsQcNvZ4OtEMXXSt8DAT6YChOHS0recpyT8m2VeQZv
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/trace/${classid}/${token}`);
+        setMemberSummary(data);
+        console.log(data);
+    }
+
+
+
+
     useEffect(() => {
         if (!token) {
             navigate('/login')
@@ -74,6 +87,8 @@ const Members = () => {
 
 
         fetchStudent();
+        fetchMemberSummary();
+
     }
         , [token]);
 
@@ -82,33 +97,74 @@ const Members = () => {
     return (
         <>
             {/* search input */}
-            <div className="mt-2">
-                <div className="input-group mb-3">
-                    <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
-                        onChange={handleSearch}
-                    />
+            <div className="container-fluid sticky-top">
+                <div className="row py-3"
+                    style={{
+                        backgroundColor: 'rgba(255,255,255,0.5)',
+                        backdropFilter: 'blur(10px)',
 
-                </div>
-            </div>
-            <div className="row sticky-top">
-                <div className="col mx-auto">
-                    <div className="card">
-                        <div className="card-body text-center">
-                            <h5 className="card-title">จำนวนนักศึกษาทั้งหมด {members.length}</h5>
-
-                            <h5 className="card-title btn btn-success text-light rounded-pill p-2 m-2">ปกติ : {' '}
-                                {members.filter((member) => member.status === 'R').length}
-                            </h5>
-
-                            <h5 className="card-title btn btn-warning rounded-pill p-2 m-2">วิกฤติ : {' '}
-                                {members.filter((member) => member.status === 'C1').length}
-                            </h5>
-
+                    }}>
+                    <div className="mt-2">
+                        <div className="input-group mb-3">
+                            <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
+                                onChange={handleSearch}
+                            />
 
                         </div>
                     </div>
-                </div>
 
+                    <div className="col-md mx-auto">
+                        <div className="card h-100">
+                            <div className="card-body text-center">
+                                <h5 className="card-title">จำนวนนักศึกษาทั้งหมด {members.length}</h5>
+
+                                <h5 className="card-title btn btn-success text-light rounded-pill p-2 m-2">ปกติ : {' '}
+                                    {members.filter((member) => member.status === 'R').length}
+                                </h5>
+
+                                <h5 className="card-title btn btn-warning rounded-pill p-2 m-2">วิกฤติ : {' '}
+                                    {members.filter((member) => member.status === 'C1').length}
+                                </h5>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md mx-auto">
+                        <div className="card">
+                            <div className="card-body">
+                                {/* <div className="card-title">ยืนยันลงทะเบียน</div> */}
+                                <div className="card-text">ยืนยันลงทะเบียน : {memberSummary.confirmallnum}</div>
+
+                            </div>
+                        </div>
+                        <div className="card">
+
+                            <div className="card-body">
+                                <div className="card-text">ยังไม่ยืนยัน : {memberSummary.notconfirmallnum}</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div className="col-md mx-auto">
+                        <div className="card">
+
+                            <div className="card-body">
+                                <div className="card-text">ไม่ลงทะเบียน ไม่รักษาสภาพ : {members.length - (memberSummary.confirmallnum + memberSummary.notconfirmallnum + memberSummary.preservnum)}</div>
+                            </div>
+
+                        </div>
+                        <div className="card">
+
+                            <div className="card-body">
+                                <div className="card-text">รักษาสภาพ : {memberSummary.preservnum}</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div className="row">
                 {members.map((member, index) => (

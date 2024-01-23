@@ -5,7 +5,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import McasLogo from '../assets/rutsMcasLogo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 const MyNavbar = () => {
@@ -69,16 +71,26 @@ const MyNavbar = () => {
                         )}
                         <Nav>
                             {loggedIn ? (
-                                <Nav.Link onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} />{' '}Logout</Nav.Link>
-                            ) : (
-                                <LinkContainer to="/login">
-                                    <Nav.Link><FontAwesomeIcon icon={faKey} />{' '}Login</Nav.Link>
-                                </LinkContainer>
-                            )}
+                                <>
+                                    <LinkContainer to="/login">
+                                        <Nav.Link onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} />{' '}Logout</Nav.Link>
+                                    </LinkContainer>
+                                </>
+                            ) : null
+                                // ) : (
+                                //     <>
+                                //         <LinkContainer to="/login">
+                                //             <Nav.Link><FontAwesomeIcon icon={faKey} />{' '}Login</Nav.Link>
+                                //         </LinkContainer>
+                                //     </>
+                                // )
+                            }
+
+
                         </Nav>
                     </Navbar.Collapse>
-                </div>
-            </Navbar>
+                </div >
+            </Navbar >
         </>
     );
 };
