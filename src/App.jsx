@@ -10,6 +10,7 @@ import MyNavbar from './components/MyNavbar';
 import About from './components/about'
 import Members from './pages/Members';
 import Footer from './components/Footer';
+import LoginWithToken from './components/LoginWithToken';
 
 
 
@@ -46,6 +47,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home token={token} />} />
           <Route path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
+          <Route path="/login/:token" element={<LoginWithToken />} />
           <Route path="/about" element={<About />} />
           <Route path="/classroomlist" element={<ClassRoomList />} />
           <Route path="/members/:classid" element={<Members />} />
