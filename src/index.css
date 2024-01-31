@@ -26,6 +26,32 @@
     
   }
 
+  .carousel-control-next-icon {
+    background-color: #001b54;
+    color:#fff;
+    border-radius: 50%;
+  }
+  .carousel-control-prev-icon {
+    background-color: #001b54;
+    color:#fff;
+    border-radius: 50%;
+  }
+
+  /* Custom styles for the previous button */
+.custom-prev-button {
+  /* Your custom styles here */
+  background-color: red;
+  /* Add other styles as needed */
+}
+
+/* Custom styles for the next button */
+.custom-next-button {
+  /* Your custom styles here */
+  background-color: green;
+  /* Add other styles as needed */
+}
+
+
   
 
   .field-icon {
@@ -51,6 +77,8 @@
     border-color: var(--primary);
     border:none;
   }
+
+ 
 
   .btn-primary:hover {
     background-color: var(--warning);

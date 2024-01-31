@@ -6,7 +6,7 @@ import BarChart from '../components/BarChart'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faEnvelope, faChevronLeft, faClone } from '@fortawesome/fontawesome-free-solid'
+import { faEnvelope, faChevronLeft, faClone, faPhone } from '@fortawesome/fontawesome-free-solid'
 
 const Members = () => {
 
@@ -33,15 +33,20 @@ const Members = () => {
     }
 
 
+    // const handleLinkClick = () => {
+    //     navigate(`/studentinfo`, { state: { id: members.id } });
+    //     console.log('clicked')
+    // };
+
     const getStatusTextClass = (status) => {
         switch (status) {
             case 'R':
-                return 'btn-success';
+                return 'bg-success';
             case 'WITHDRAW' || 'CHEAT':
-                return 'btn-danger';
+                return 'bg-danger text-dark';
 
             default:
-                return 'btn-warning'; // Default color for unknown status
+                return 'bg-warning text-dark'; // Default color for unknown status
         }
     };
 
@@ -102,12 +107,13 @@ const Members = () => {
             <div className="container-fluid sticky-top">
                 <div className="row py-3"
                     style={{
-                        backgroundColor: 'rgba(255,255,255,0.5)',
-                        backdropFilter: 'blur(10px)',
+                        backgroundColor: '#f8f9fa',
+                        // backdropFilter: 'blur(10px)',
 
                     }}>
-                    <div className="mt-2">
-                        <div className="input-group mb-3">
+                    <div className="">
+                        <div className="input-group mb-2">
+                            {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
                             <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
                                 onChange={handleSearch}
                             />
@@ -115,92 +121,119 @@ const Members = () => {
                         </div>
                     </div>
 
+                    {/* จำนวนนักศึกษา */}
                     <div className="col-md mx-auto">
-                        <div className="card h-100">
-                            <div className="card-body text-center">
-                                <h5 className="card-title">จำนวนนักศึกษาทั้งหมด {members.length}</h5>
+                        <div className="">
+                            <div className=" text-center d-flex justify-content-between align-items-center">
 
-                                <h5 className="card-title btn btn-success text-light rounded-pill p-2 m-2">ปกติ : {' '}
-                                    {members.filter((member) => member.status === 'R').length}
-                                </h5>
+                                <div>
 
-                                <h5 className="card-title btn btn-warning rounded-pill p-2 m-2">วิกฤติ : {' '}
-                                    {members.filter((member) => member.status === 'C1').length}
-                                </h5>
+                                    <p className="card-text">จำนวนนักศึกษาทั้งหมด {members.length}{' '}</p>
+                                </div>
+
+                                <div>
+                                    <small className="p-1 btn  rounded-pill btn-success">ปกติ : {' '}
+                                        {members.filter((member) => member.status === 'R').length}
+                                    </small>
+                                </div>
+
+                                <div>
+                                    <small className="p-1 btn rounded-pill btn-warning">วิกฤติ : {' '}
+                                        {members.filter((member) => member.status === 'C1').length}
+                                    </small>
+                                </div>
 
 
                             </div>
                         </div>
                     </div>
-                    <div className="col-md mx-auto">
-                        <div className="card">
-                            <div className="card-body">
-                                {/* <div className="card-title">ยืนยันลงทะเบียน</div> */}
-                                <div className="card-text">ยืนยันลงทะเบียน : {memberSummary.confirmallnum}</div>
 
-                            </div>
-                        </div>
-                        <div className="card">
 
-                            <div className="card-body">
-                                <div className="card-text">ยังไม่ยืนยัน : {memberSummary.notconfirmallnum}</div>
-                            </div>
 
-                        </div>
-
-                    </div>
-                    <div className="col-md mx-auto">
-                        <div className="card">
-
-                            <div className="card-body">
-                                <div className="card-text">ไม่ลงทะเบียน ไม่รักษาสภาพ : {members.length - (memberSummary.confirmallnum + memberSummary.notconfirmallnum + memberSummary.preservnum)}</div>
-                            </div>
-
-                        </div>
-                        <div className="card">
-
-                            <div className="card-body">
-                                <div className="card-text">รักษาสภาพ : {memberSummary.preservnum}</div>
-                            </div>
-
-                        </div>
-                    </div>
 
                 </div>
             </div>
-            <div className="row">
+            <div className="container mt-2 border rounded-3 shadow">
+                <div className="row">
+                    <div className="col-md mx-auto text-center ">
+
+
+
+                        <button className='btn  btn-success mx-2 my-2' >ยืนยันลงทะเบียน : {memberSummary.confirmallnum}</button>
+
+
+                        <button className='btn btn-secondary mx-2 my-2'>ยังไม่ยืนยัน : {memberSummary.notconfirmallnum}</button>
+
+                        <button className='btn btn-warning mx-2 my-2'>ไม่ลงทะเบียน ไม่รักษาสภาพ : {members.length - (memberSummary.confirmallnum + memberSummary.notconfirmallnum + memberSummary.preservnum)}</button>
+
+                        <button className='btn btn-outline-dark  mx-2 my-2'>รักษาสภาพ : {memberSummary.preservnum}</button>
+                        <button className='btn btn-outline-success  mx-2 my-2'>ถอนรายวิชาสำเร็จ : {memberSummary.withdrawallnum}</button>
+                        <button className="btn btn-outline-danger  mx-2 my-2">ถอนรายวิชาไม่สำเร็จ : {memberSummary.notwithdrawallnum}</button>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div className="row  mb-3">
                 {members.map((member, index) => (
                     <div className="col-lg-4 col-md mx-auto p-2" key={member.id}>
                         <div className={`card h-100 `}>
                             <div className="card-body">
 
+                                <div className="d-flex ">
+                                    <div className='p-2'>
 
-                                <img src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png' className="rounded-pill shadow" width={50} alt="..." />
-
-                                <p className="card-title">ชื่อ-สกุล :
-                                    <span>{member.fname} {member.lname}</span>
-                                </p>
-                                <h6 className="card-subtitle mb-2 text-muted">รหัสนักศึกษา : <span>{member.id}</span>
-                                    {' '}
-                                    <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.id)} />
-                                </h6>
-                                {/* <form onSubmit={copyToClipboard}> */}
-
-                                <p className="card-text" ><FontAwesomeIcon icon={faEnvelope} /> {member.email}
-                                    {' '}
-                                    <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.email)} />
-                                    {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
-                                </p>
+                                        <img src={member.pic} className="rounded shadow" width={90} alt="..." />
+                                    </div>
 
 
+
+                                    <div className='mt-3 d-flex mb-3 flex-column justify-content-center align-items-start p-2'>
+                                        <h5 className="card-title">ชื่อ-สกุล :
+                                            <span>{member.fname} {member.lname}</span>
+                                        </h5>
+                                        <h6 className="card-subtitle mb-2 text-muted">รหัสนักศึกษา : <span>{member.id}</span>
+                                            {' '}
+                                            <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.id)} />
+                                        </h6>
+                                        {/* <form onSubmit={copyToClipboard}> */}
+
+                                        <small className="card-text text-muted mb-3" ><FontAwesomeIcon icon={faEnvelope} /> {member.email}
+                                            {' '}
+                                            <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.email)} />
+                                            {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
+                                        </small>
+                                        <small className="card-text text-muted 
+                                        mb-3">
+                                            <a href={`tel:${member.phone}`} className='nav-link'><FontAwesomeIcon icon={faPhone} />{' '}
+                                                {member.phone}
+                                            </a>
+                                        </small>
+
+                                    </div>
+
+                                </div>
                                 {/* </form> */}
 
-                                <div style={{ position: 'absolute', bottom: '5px', right: '5px' }}>
-                                    <small className="btn btn-outline-dark rounded-5 ">GPA. : {member.gpa}</small>
-                                </div>
-                                <div style={{ position: 'absolute', top: '5px', right: '5px' }}>
+                                <div style={{ position: 'relative', bottom: '5px', left: '15px' }}>
+                                    <Link to={`/studentinfo/${member.id}`}
+                                        state={{
+                                            id: member.id,
+                                            name: `${member.fname} ${member.lname}`,
+                                            gpa: member.gpa,
+                                            pic: member.pic,
+                                        }}>
 
-                                    <button className={`btn ${getStatusTextClass(member.status)} rounded-pill`}>{member.statusname}</button>
+                                        <span className="badge bg-dark  rounded-5 shadow">GPA. : {member.gpa}</span>
+
+                                    </Link>
+
+                                </div>
+                                <div style={{ position: 'absolute', top: '15px', left: '15px' }}>
+
+                                    <span className={`badge ${getStatusTextClass(member.status)} rounded-pill`}>{member.statusname}</span>
                                     {/* {member.status === 'C1' ? 'รอพินิจ' : 'ปกติ'}</button> */}
                                 </div>
                             </div>
@@ -210,11 +243,11 @@ const Members = () => {
 
             </div>
 
-            <div id="back">
+            {/* <div id="back" style={{ zIndex: '9999' }}>
                 <Link to="/" className="btn btn-primary">
                     <FontAwesomeIcon icon={faChevronLeft} /> กลับหน้าหลัก
                 </Link>
-            </div>
+            </div> */}
         </>
     )
 }

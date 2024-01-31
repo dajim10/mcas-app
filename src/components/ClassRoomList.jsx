@@ -35,7 +35,7 @@ const ClassRoomList = () => {
 
 
     return (
-        <div className='container'>
+        <div className='container '>
             <p className='display-6'>รายชื่อห้องเรียน</p>
 
             <div className="row">
@@ -44,7 +44,7 @@ const ClassRoomList = () => {
                     <div className="col mx-auto" key={index}>
 
                         <div className="card">
-                            <div className="card-body">
+                            <div className="card-body text-center">
                                 <h5 className="card-title">{classroom.classname}</h5>
 
                                 <Link to={`/members/${classroom.classid}`} className="btn btn-primary">เข้าสู่ห้องเรียน</Link>

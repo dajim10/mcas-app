@@ -1,7 +1,7 @@
 // src/App.jsx
 
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
@@ -11,6 +11,8 @@ import About from './components/about'
 import Members from './pages/Members';
 import Footer from './components/Footer';
 import LoginWithToken from './components/LoginWithToken';
+// import StudentInfo from './components/StudentInfo';
+import StudentSlider from './components/StudentSlider';
 
 
 
@@ -18,6 +20,8 @@ import LoginWithToken from './components/LoginWithToken';
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
+  const [studentId, setStudentId] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if the user is logged in
@@ -25,6 +29,19 @@ const App = () => {
       setToken(localStorage.getItem('token'));
       setLoggedIn(true);
     }
+
+    // check token timeout
+    const checkToken = async () => {
+      const { tokenData } = await fetch(`${import.meta.env.VITE_API_URL}/elogin/token/${token}`)
+      console.log(tokenData);
+      if (tokenData) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+        localStorage.removeItem('token');
+      }
+    }
+
   }, []);
 
   const handleLogout = () => {
@@ -51,6 +68,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/classroomlist" element={<ClassRoomList />} />
           <Route path="/members/:classid" element={<Members />} />
+          <Route path="/studentinfo/:id" element={<StudentSlider />} />
         </Routes>
       </Container>
       <Footer />

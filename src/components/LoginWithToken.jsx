@@ -27,7 +27,7 @@ const LoginWithToken = () => {
             })
             .catch(err => {
                 console.log(err);
-                return false
+                // return false
             });
 
         if (checkToken) {

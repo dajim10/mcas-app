@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom'
-import McasLogo from '../assets/rutsMcasLogo.png'
+import McasLogo from '../assets/logo80.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,8 +14,6 @@ const MyNavbar = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate()
     const token = localStorage.getItem('token');
-
-
 
 
 
@@ -44,12 +42,17 @@ const MyNavbar = () => {
                 <div className="container">
                     <LinkContainer to="/">
                         <Navbar.Brand>
+                            {/* <small className="text-wrap"> */}
+                            {/* RUTS MCAS */}
+                            {/* </small> */}
                             <img
                                 src={McasLogo}
 
                                 className="d-inline-block align-top"
-                                alt="React Bootstrap logo"
+                                alt="MCAS LOGO"
                             />
+
+
 
                         </Navbar.Brand>
                     </LinkContainer>
