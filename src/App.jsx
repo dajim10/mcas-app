@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import LoginWithToken from './components/LoginWithToken';
 // import StudentInfo from './components/StudentInfo';
 import StudentSlider from './components/StudentSlider';
+import bg from './assets/bg.jpg';
 
 
 

@@ -38,7 +38,13 @@ const MyNavbar = () => {
     return (
         <>
 
-            <Navbar bg="light" expand="lg" className='sticky-top'>
+            <Navbar expand="lg" className='sticky-top'
+                style={{
+                    backgroundColor: 'rgba(255,255,255,0.5)',
+                    backdropFilter: 'blur(10px)'
+                    , boxShadow: '0 0 10px #00000040'
+                }}
+            >
                 <div className="container">
                     <LinkContainer to="/">
                         <Navbar.Brand>

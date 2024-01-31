@@ -6,7 +6,7 @@ import BarChart from '../components/BarChart'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faEnvelope, faChevronLeft, faClone, faPhone } from '@fortawesome/fontawesome-free-solid'
+import { faEnvelope, faChevronLeft, faClone, faPhone, faUser } from '@fortawesome/fontawesome-free-solid'
 
 const Members = () => {
 
@@ -15,6 +15,7 @@ const Members = () => {
     const [members, setMembers] = useState([]);
     const [memberSummary, setMemberSummary] = useState([]);
     const navigate = useNavigate();
+
 
     const copyToClipboard = (text) => {
         // e.preventDefault();
@@ -37,6 +38,11 @@ const Members = () => {
     //     navigate(`/studentinfo`, { state: { id: members.id } });
     //     console.log('clicked')
     // };
+
+    const clearFilter = () => {
+        fetchStudent();
+    }
+
 
     const getStatusTextClass = (status) => {
         switch (status) {
@@ -69,6 +75,14 @@ const Members = () => {
         setMembers(filterMembers);
 
     }
+
+    const paidUnsccess = () => {
+        const filterMembers = members.filter((member) => {
+            return member.paid === 0;
+        })
+        setMembers(filterMembers);
+    }
+
 
     const fetchStudent = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
@@ -107,11 +121,12 @@ const Members = () => {
             <div className="container-fluid sticky-top">
                 <div className="row py-3"
                     style={{
-                        backgroundColor: '#f8f9fa',
-                        // backdropFilter: 'blur(10px)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        backdropFilter: 'blur(10px)',
+                        borderRadius: '10px',
 
                     }}>
-                    <div className="">
+                    <div >
                         <div className="input-group mb-2">
                             {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
                             <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
@@ -128,7 +143,8 @@ const Members = () => {
 
                                 <div>
 
-                                    <p className="card-text">จำนวนนักศึกษาทั้งหมด {members.length}{' '}</p>
+                                    <button className="btn btn-primary" onClick={fetchStudent}>จำนวนนักศึกษาทั้งหมด {memberSummary.confirmallnum}{' '}  <FontAwesomeIcon icon={faUser} />
+                                    </button>
                                 </div>
 
                                 <div>
@@ -153,22 +169,27 @@ const Members = () => {
 
                 </div>
             </div>
-            <div className="container mt-2 border rounded-3 shadow">
+            <div className="container mt-2 border rounded-3 shadow " style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                backdropFilter: 'blur(10px)',
+            }}>
                 <div className="row">
-                    <div className="col-md mx-auto text-center ">
+                    <div className="col-md mx-auto   ">
 
 
 
-                        <button className='btn  btn-success mx-2 my-2' >ยืนยันลงทะเบียน : {memberSummary.confirmallnum}</button>
+                        <button className='btn  btn-success mx-2 my-2' onClick={clearFilter} >ยืนยันลงทะเบียน : {memberSummary.confirmallnum}</button>
 
 
                         <button className='btn btn-secondary mx-2 my-2'>ยังไม่ยืนยัน : {memberSummary.notconfirmallnum}</button>
 
-                        <button className='btn btn-warning mx-2 my-2'>ไม่ลงทะเบียน ไม่รักษาสภาพ : {members.length - (memberSummary.confirmallnum + memberSummary.notconfirmallnum + memberSummary.preservnum)}</button>
+                        <button className='btn btn-warning mx-2 my-2'>ไม่ลงทะเบียน ไม่รักษาสภาพ : {memberSummary.notregispreservnum}</button>
 
-                        <button className='btn btn-outline-dark  mx-2 my-2'>รักษาสภาพ : {memberSummary.preservnum}</button>
-                        <button className='btn btn-outline-success  mx-2 my-2'>ถอนรายวิชาสำเร็จ : {memberSummary.withdrawallnum}</button>
-                        <button className="btn btn-outline-danger  mx-2 my-2">ถอนรายวิชาไม่สำเร็จ : {memberSummary.notwithdrawallnum}</button>
+                        <button className='btn btn-dark  mx-2 my-2'>รักษาสภาพ : {memberSummary.preservnum}</button>
+                        <button className='btn btn-primary  mx-2 my-2'>ถอนรายวิชาสำเร็จ : {memberSummary.withdrawallnum}</button>
+                        <button className="btn btn-danger  mx-2 my-2">ถอนรายวิชาไม่สำเร็จ : {memberSummary.notwithdrawallnum}</button>
+                        <button className="btn  mx-2 my-2" style={{ backgroundColor: '#B71375', color: '#fff' }}
+                            onClick={paidUnsccess}>ค้างชำระค่าเทอม : {memberSummary.paidunsuccessnum}</button>
 
 
                     </div>
@@ -185,15 +206,15 @@ const Members = () => {
                                 <div className="d-flex ">
                                     <div className='p-2'>
 
-                                        <img src={member.pic} className="rounded shadow" width={90} alt="..." />
+                                        <img src={member.pic} className="rounded shadow" width={80} alt="..." />
                                     </div>
 
 
 
                                     <div className='mt-3 d-flex mb-3 flex-column justify-content-center align-items-start p-2'>
-                                        <h5 className="card-title">ชื่อ-สกุล :
+                                        <span className="card-title">ชื่อ-สกุล :
                                             <span>{member.fname} {member.lname}</span>
-                                        </h5>
+                                        </span>
                                         <h6 className="card-subtitle mb-2 text-muted">รหัสนักศึกษา : <span>{member.id}</span>
                                             {' '}
                                             <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.id)} />
@@ -205,19 +226,31 @@ const Members = () => {
                                             <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.email)} />
                                             {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
                                         </small>
-                                        <small className="card-text text-muted 
-                                        mb-3">
-                                            <a href={`tel:${member.phone}`} className='nav-link'><FontAwesomeIcon icon={faPhone} />{' '}
-                                                {member.phone}
-                                            </a>
+                                        <small className="card-text text-muted mb-3" ><FontAwesomeIcon icon={faEnvelope} /> {member.microsoftid}
+                                            {' '}
+                                            <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.microsoftid)} />
+                                            {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
                                         </small>
+
+                                        <div className='d-flex align-items-center  justify-content-center'>
+                                            <span>เบอร์โทรติดต่อ {' '}
+                                                <small className="badge bg-dark text-light 
+                                        mb-3">
+                                                    <a href={`tel:${member.phone}`} className='nav-link'><FontAwesomeIcon icon={faPhone} />{' '}
+                                                        {member.phone}
+                                                    </a>
+                                                </small>
+
+                                            </span>
+                                        </div>
+
 
                                     </div>
 
                                 </div>
                                 {/* </form> */}
 
-                                <div style={{ position: 'relative', bottom: '5px', left: '15px' }}>
+                                <div style={{ position: 'absolute', top: '130px', left: '25px' }}>
                                     <Link to={`/studentinfo/${member.id}`}
                                         state={{
                                             id: member.id,
@@ -234,20 +267,38 @@ const Members = () => {
                                 <div style={{ position: 'absolute', top: '15px', left: '15px' }}>
 
                                     <span className={`badge ${getStatusTextClass(member.status)} rounded-pill`}>{member.statusname}</span>
-                                    {/* {member.status === 'C1' ? 'รอพินิจ' : 'ปกติ'}</button> */}
+
+
+
+                                    {/* <button>{member.status === 'C1' ? 'รอพินิจ' : 'ปกติ'}</button> */}
                                 </div>
+
+                                <div className="badge bg-dark" style={{ position: 'absolute', bottom: '30px', right: '15px' }}>{member.fundname}</div>
+
+                                <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
+                                    {member.numpreserv === 0 ? null :
+                                        <span className={`badge bg-dark rounded-pill`}>ลงทะเบียนรักษาสภาพ</span>
+                                    }
+                                    {member.paid === 1 ? null :
+                                        <span className={`badge bg-danger rounded-pill`}>ค้างชำระค่าเทอม</span>
+                                    }
+                                </div>
+
+
+
+
                             </div>
                         </div>
                     </div>
                 ))}
 
-            </div>
+            </div >
 
-            {/* <div id="back" style={{ zIndex: '9999' }}>
+            <div id="back" style={{ zIndex: '9999' }}>
                 <Link to="/" className="btn btn-primary">
-                    <FontAwesomeIcon icon={faChevronLeft} /> กลับหน้าหลัก
+                    <FontAwesomeIcon icon={faChevronLeft} />
                 </Link>
-            </div> */}
+            </div>
         </>
     )
 }
