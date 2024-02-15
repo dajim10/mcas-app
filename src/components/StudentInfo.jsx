@@ -64,8 +64,8 @@ const StudentInfo = () => {
                             <h5 className="card-title">รหัสนักศึกษา : {studentData.id}</h5>
                             <p>ชื่อ - สกุล : {state.name}</p>
                             <p>เกรดเฉลี่ย : {state.gpa}</p>
-                            <p className='btn btn-primary'>หน่วยกิจลงทะเบียน : {studentData.regiscredit}</p>
-                            <p className='btn btn-primary'>หน่วยกิจเรียนผ่าน : {studentData.earncredit}</p>
+                            <p className='btn btn-primary'>หน่วยกิตลงทะเบียน : {studentData.regiscredit}</p>
+                            <p className='btn btn-primary'>หน่วยกิตสอบผ่าน : {studentData.earncredit}</p>
                         </div>
                     </div>
                 </div>

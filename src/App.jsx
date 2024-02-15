@@ -7,14 +7,17 @@ import LoginForm from './components/LoginForm';
 import Home from './components/Home';
 import ClassRoomList from './components/ClassRoomList';
 import MyNavbar from './components/MyNavbar';
-import About from './components/about'
+import About from './components/About'
 import Members from './pages/Members';
 import Footer from './components/Footer';
 import LoginWithToken from './components/LoginWithToken';
 // import StudentInfo from './components/StudentInfo';
 import StudentSlider from './components/StudentSlider';
 import bg from './assets/bg.jpg';
-
+import CourseRegis from './components/CourseRegis';
+import Student from './components/Student';
+import Chat from './components/Chat';
+import StudentCourse from './components/StudentCourse';
 
 
 
@@ -32,16 +35,17 @@ const App = () => {
     }
 
     // check token timeout
-    const checkToken = async () => {
-      const { tokenData } = await fetch(`${import.meta.env.VITE_API_URL}/elogin/token/${token}`)
-      console.log(tokenData);
-      if (tokenData) {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
-        localStorage.removeItem('token');
-      }
-    }
+    // const checkToken = async () => {
+    //   const { tokenData } = await fetch(`${import.meta.env.VITE_API_URL}/elogin/token/${token}`)
+    //   console.log(tokenData);
+    //   if (tokenData) {
+    //     setLoggedIn(true);
+    //   } else {
+    //     setLoggedIn(false);
+    //     localStorage.removeItem('token');
+    //   }
+    // }
+    // checkToken();
 
   }, []);
 
@@ -70,8 +74,13 @@ const App = () => {
           <Route path="/classroomlist" element={<ClassRoomList />} />
           <Route path="/members/:classid" element={<Members />} />
           <Route path="/studentinfo/:id" element={<StudentSlider />} />
+          <Route path="/courseregis/:id" element={<CourseRegis />} />
+          <Route path="/student" element={<Student />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/studentcourse" element={<StudentCourse />} />
         </Routes>
       </Container>
+
       <Footer />
 
     </>

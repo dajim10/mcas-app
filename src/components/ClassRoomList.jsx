@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
 const ClassRoomList = () => {
 
     const [classRoom, setClassRoom] = useState([])
     const token = localStorage.getItem('token');
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Check if the user is logged in
@@ -41,13 +44,13 @@ const ClassRoomList = () => {
             <div className="row">
                 {classRoom.map((classroom, index) => (
 
-                    <div className="col mx-auto" key={index}>
+                    <div className="col-lg-6 col-md m-2 mx-auto" key={index} onClick={() => navigate(`/members/${classroom.classid}`)}>
 
                         <div className="card">
                             <div className="card-body text-center">
                                 <h5 className="card-title">{classroom.classname}</h5>
 
-                                <Link to={`/members/${classroom.classid}`} className="btn btn-primary">เข้าสู่ห้องเรียน</Link>
+                                <Link to={`/members/${classroom.classid}`} className="btn btn-primary"><FontAwesomeIcon icon={faRightToBracket} /></Link>
                             </div>
                         </div>
                     </div>

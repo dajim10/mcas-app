@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import ClassRoomList from './ClassRoomList';
+import { Swal } from 'sweetalert2'
 
 
 
@@ -24,11 +25,22 @@ const Home = () => {
     useEffect(() => {
         if (!token) {
             navigate('/login')
-
         }
         const fetchClassRoom = async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/supervisor/${token}`);
             console.log(data);
+            if (data.status === 'token') {
+                navigate('/login');
+                return;
+            }
+            if (data.class.length === 0) {
+                alert('ระบบนี้ใช้เฉพาะอาจารย์ที่ปรึกษาเท่านั้น');
+                return;
+            }
+
+
+
+
             setClassRoom(data.class);
 
         }

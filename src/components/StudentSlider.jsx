@@ -1,159 +1,173 @@
-// https://api.rmutsv.ac.th/student/grade/159404140067/kitisak.w:3H3bCyFX0VznA6C3q4irSGw9PXhvaEdYDuyzoip9pQSLpx864SYwGl7TTgmty0qK
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/fontawesome-free-solid';
-import { Carousel } from 'react-bootstrap';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'; // Import the necessary icons
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css'
-import 'swiper/css/effect-cube'
-import 'swiper/css/effect-flip'
-import 'swiper/css/pagination'
-import 'swiper/css/effect-cards'
-
-
-
-import { EffectFlip, EffectCube, Pagination, EffectCards } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cube';
+import 'swiper/css/effect-flip';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-cards';
+import 'swiper/css/navigation';
+import { EffectCube, Pagination, Navigation, EffectFlip, EffectCards } from 'swiper/modules';
 
 const StudentSlider = () => {
-
     const navigate = useNavigate();
     const { id } = useParams();
     const { state } = useLocation();
     const token = localStorage.getItem('token');
     const [studentData, setStudentData] = useState([]);
     const [semesters, setSemesters] = useState([]);
-    // const [stateData, setStateData] = useState({
-    //     name: name,
-    //     gpa: gpa,
-    // });
-    console.log('state: ', state);
-
 
     useEffect(() => {
-        // Check if the user is logged in
-
-
         if (!token) {
-            window.location.href = '/login'
+            window.location.href = '/login';
         } else {
+
             const apiEndpoint = `${import.meta.env.VITE_API_URL}/student/grade/${id}/${token}`;
-
-
-            // const apiEndpoint = `${import.meta.env.VITE_API_URL}/teacher/supervisor/${token}`;
-            // const token = localStorage.getItem('token');
             const fetchData = async () => {
                 const response = await fetch(apiEndpoint);
                 const data = await response.json();
-                // console.log(data);
-                setStudentData(data)
+                console.log('grade: ', data);
+                setStudentData(data);
                 const semesters = data.semester;
-                console.log('semester: ', semesters);
                 setSemesters(semesters);
-
-
-            }
+            };
             fetchData();
-
         }
-    }
-        , [token]);
-
-
-
+    }, [token]);
 
     return (
         <div>
             <h1 className='text-center'>ข้อมูลการเรียน</h1>
-
-            <div className="row">
+            <div className="row text-center">
                 <div className="col-auto mx-auto">
                     <div className="card">
                         <div className="card-body">
-                            {/* <h5 className="card-title">ชื่อ : {stateData.name} </h5> */}
+                            <img src={state.pic} alt="pic" width="100" className='rounded-3 m-2 border shadow' />
                             <h5 className="card-title">รหัสนักศึกษา : {studentData.id}</h5>
                             <p>ชื่อ - สกุล : {state.name}</p>
-                            <p>เกรดเฉลี่ย : {state.gpa}</p>
-                            <p className='btn btn-primary'>หน่วยกิจลงทะเบียน : {studentData.regiscredit}</p>
-                            <p className='btn btn-primary'>หน่วยกิจเรียนผ่าน : {studentData.earncredit}</p>
+                            <p>GPA. : {state.gpa}</p>
+                            <p>อาจารย์ที่ปรึกษา</p>
+                            <div className='d-flex align-items-center justify-content-center'>
+                                {studentData.supervisor?.map((item, index) =>
+                                    <li className="badge bg-dark" key={index}>{item.supervisor} {item.priority && <span className='badge rounded-pill bg-danger '>{item.priority}</span>}</li>
+                                )}
+                            </div>
+                            <span className='badge bg-primary m-2'>หน่วยกิตลงทะเบียน : {studentData.regiscredit}</span>
+                            <span className='badge bg-success m-2'>หน่วยกิตสอบผ่าน : {studentData.earncredit}</span>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div className='my-2'>
                 <FontAwesomeIcon icon={faChevronLeft} onClick={() => navigate(-1)} className='btn btn-warning rounded' />
-
             </div>
             <div className="row my-2" key={studentData.id}>
+                <div className="container col-lg-6 mx-auto" >
+                    <div className="card m-2 ">
+                        <Swiper
+                            spaceBetween={50}
+                            slidesPerView={1}
+                            // navigation={true}
+                            modules={[EffectCube, Pagination, Navigation, EffectFlip, EffectCards]}
+                            effect='cube'
+                            pagination={{ clickable: true, position: 'top' }}
+                            className='  p-2 m-3'
+                            key={studentData.id}
 
-                <div className="container" >
-                    <Swiper
-                        spaceBetween={50}
-                        slidesPerView={1}
-                        onSlideChange={() => console.log('slide change')}
-                        onSwiper={(swiper) => console.log(swiper)}
-                        modules={[EffectCube, Pagination]}
-                        effect='cube'
-                        pagination={{ clickable: true }}
-                        className='  p-2 m-3'
-                    >
-
-                        {studentData.semester?.map((semester, index) => (
-                            <SwiperSlide>
-
-                                {/* <div className="row"> */}
-                                {/* <div className="col-lg-4 col-md mx-auto"> */}
-                                {/* <div className="card m-2" key={index}> */}
-                                {/* <div className="card-body"> */}
-
-                                <div className='bg-light shadow border rounded-4 p-2 m-3'>
-                                    <h5 className="card-title text-center mb-2">ภาคเรียนที่ {semester.text1}</h5>
-                                    <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-start mb-2'>หน่วยกิจลงทะเบียน : {semester.regiscredit}</span>
-                                    <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-start mb-2'>หน่วยกิจเรียนผ่าน : {semester.earncredit}</span>
-                                    <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-start mb-2'>GPS : {semester.gps}
-                                    </span>
-                                </div>
-
-                                {semester.course.map((course, index) => (
-                                    <ul className="list-group">
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            <span className='badge text-center text-wrap text-left  text-dark'>{course.coursename}</span>
-                                            <span className={`badge ${course.grade === 'F' ? 'bg-danger' : 'bg-primary'} rounded-pill`}>
-                                                {course.grade}
-                                            </span>
-
-                                        </li>
-                                    </ul>
-                                ))}
+                            style={{ position: 'relative' }}
+                            navigation={{
+                                prevEl: '.custom-prev-button', // Selector for the previous button
+                                nextEl: '.custom-next-button', // Selector for the next button
+                            }}
+                        >
+                            {studentData.semester?.map((semester, index) => (
+                                <SwiperSlide key={studentData.id}>
 
 
+                                    <div className='bg-light shadow border rounded-4 p-2 m-3'>
+                                        <h5 className="card-title text-center mb-2"> {semester.text2}</h5>
 
 
-                                {/* <p>
-                                            <a className="btn btn-outline-dark rounded-pill" data-bs-toggle="collapse" href={`#semester${index}`} role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                ดูรายวิชา
-                                            </a>
-                                        </p> */}
-                                {/* </div> */}
-                                {/* </div> */}
-                                {/* </div> */}
-                                {/* </div> */}
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                                        <div className="d-flex flex-column p-2 mx-auto">
+                                            <div className='d-flex justify-content-between align-items-center '>
+                                                <span className="me-2">หน่วยกิตที่ลงทะเบียน</span>
+                                                <span className="badge bg-primary">{semester.regiscredit}</span>
+                                            </div>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <span className="me-2">หน่วยกิตที่สอบผ่าน</span>
+                                                <span className="badge bg-success">{semester.earncredit}</span>
+                                            </div>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <span className="me-2">เกรดเฉลี่ยภาคเรียน</span>
+                                                <span className="badge bg-dark text-light">{semester.gps}</span>
+                                            </div>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <span className="me-2">เกรดเฉลี่ยสะสม</span>
+                                                <span className="badge bg-dark text-light">{state.gpa}</span>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                        {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                                            <div className="d-flex justify-content-start align-items-center">
+                                                <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-end  align-items-end m-2 w-50'>หน่วยกิตลงทะเบียน
+
+                                                </span>
+                                                <span className="badge bg-primary text-light rounded-pill rounded-pill d-flex justify-content-center  align-items-end m-2 w-50">{semester.regiscredit}</span>
+                                            </div>
+
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-end  align-items-end m-2 w-50'>หน่วยกิตสอบผ่าน
+
+                                                </span>
+                                                <span className="badge bg-primary text-light rounded-pill rounded-pill d-flex justify-content-center  align-items-end m-2 w-50">{semester.earncredit}</span>
+                                            </div>
+                                            <div className="d-flex d-flex justify-content-between align-items-center">
+                                                <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-end  align-items-end m-2 w-50'>เกรดเฉลี่ยภาคเรียน </span>
+                                                <span className="badge bg-primary " style={{ display: 'block', width: '100px' }}>{semester.gps}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <span className='badge bg-light text-dark rounded-pill rounded-pill d-flex justify-content-end  align-items-end m-2 w-50'>เกรดเฉลี่ยสะสม</span>
+                                                <span className="badge bg-primary " style={{ display: 'block', width: '100px' }}>{state.gpa}</span>
+                                            </div>
+
+                                        </div> */}
+
+                                    </div>
+                                    {semester.course.map((course, index) => (
+                                        <ul className="list-group" key={index}>
+                                            <li className={`list-group-item d-flex justify-content-around align-items-center rounded-pill my-1 ${index % 2 === 0 && 'bg-info-light shadow'}`} >
+                                                <div style={{ width: '50%' }}>
+                                                    <span className='badge text-left text-dark'>{course.courseid}</span>
+                                                </div>
+                                                <div style={{ width: '100%' }}>
+                                                    <span className='badge text-wrap d-block text-dark' style={{ width: '100%', textAlign: 'left' }}>{course.coursename}</span>
+                                                </div>
+                                                <span className={`badge ${course.grade === 'F' ? 'bg-danger' : 'bg-primary'} rounded-pill`}>{course.grade}</span>
+                                            </li>
+                                        </ul>
+                                    ))}
+                                </SwiperSlide>
+                            ))}
+                            <div className="custom-prev-button">
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                            </div>
+                            <div className="custom-next-button ">
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </div>
+                        </Swiper>
+                    </div>
                 </div>
             </div>
-
-            {/* <div id="back">
-
-
-                <FontAwesomeIcon icon={faChevronLeft} onClick={() => navigate(-1)} className='bg-warning  p-3 my-5 rounded' />
-
-            </div> */}
-
         </div>
     )
 }
 
-export default StudentSlider
+export default StudentSlider;

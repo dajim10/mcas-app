@@ -22,7 +22,6 @@ const LoginForm = () => {
             // redirect the user to the home page if they are already logged in send them to the home page
 
             // navigate('/') 
-
         }
     }
         , [token]);
@@ -63,10 +62,16 @@ const LoginForm = () => {
             }
 
             localStorage.setItem('token', data.token);
+            localStorage.setItem('type', data.type);
 
-            // Handle the API response
-            // console.log(data);
-            navigate('/')
+            if (data.type === 'student') {
+
+                navigate('/student', { state: { student: data } })
+            } else {
+                navigate('/')
+            }
+
+
             // You can redirect to another page or perform other actions based on the response
         } catch (error) {
             console.error('Error:', error.message);
