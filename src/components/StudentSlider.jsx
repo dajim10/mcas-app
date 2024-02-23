@@ -93,19 +93,19 @@ const StudentSlider = () => {
                                         <div className="d-flex flex-column p-2 mx-auto">
                                             <div className='d-flex justify-content-between align-items-center '>
                                                 <span className="me-2">หน่วยกิตที่ลงทะเบียน</span>
-                                                <span className="badge bg-primary">{semester.regiscredit}</span>
+                                                <span className="badge bg-primary" style={{ width: '50px' }}>{semester.regiscredit}</span>
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <span className="me-2">หน่วยกิตที่สอบผ่าน</span>
-                                                <span className="badge bg-success">{semester.earncredit}</span>
+                                                <span className="badge bg-success" style={{ width: '50px' }}>{semester.earncredit}</span>
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <span className="me-2">เกรดเฉลี่ยภาคเรียน</span>
-                                                <span className="badge bg-dark text-light">{semester.gps}</span>
+                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.gps}</span>
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <span className="me-2">เกรดเฉลี่ยสะสม</span>
-                                                <span className="badge bg-dark text-light">{state.gpa}</span>
+                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{state.gpa}</span>
                                             </div>
                                         </div>
 
@@ -150,7 +150,7 @@ const StudentSlider = () => {
                                                 <div style={{ width: '100%' }}>
                                                     <span className='badge text-wrap d-block text-dark' style={{ width: '100%', textAlign: 'left' }}>{course.coursename}</span>
                                                 </div>
-                                                <span className={`badge ${course.grade === 'F' ? 'bg-danger' : 'bg-primary'} rounded-pill`}>{course.grade}</span>
+                                                <span className={`badge ${course.grade === 'F' ? 'bg-danger' : 'bg-primary'} rounded-pill`} style={{ width: '50px' }}>{course.grade}</span>
                                             </li>
                                         </ul>
                                     ))}

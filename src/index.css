@@ -11,7 +11,7 @@
     --success: rgb(69, 176, 69);
     --info: #8800ff;
     --warning: #ffcc00;
-    --danger: #your-danger-color;
+    --danger: #ff0000;
     --light: #f1f0f0;
     --dark: #383838;
     --primary: #001b54;
@@ -148,7 +148,13 @@
     font-size: 14px; /* Adjust the font size of the arrow icon */
 }
 
+  /* .bg-danger {
+    background-color: var(--danger);
+  }
 
+  .bg-dark:hover {
+    background-color: var(--light);
+  }
 
   .bg-primary {
     
@@ -157,6 +163,11 @@
 
   .bg-violet {
     background-color: #8800ff;
+  }
+
+  .bg-violet:hover {
+    background-color: var(--light);
+    color: #000000;
   }
 
   .btn-violet {
@@ -169,12 +180,31 @@
     color: #8800ff;
   }
 
+  .badge:hover {
+    cursor: pointer;
+    background-color: var(--light);
+    color: var(--dark);
+  }
  
 
   .btn-primary:hover {
     background-color: var(--warning);
     border-color: var(--primary);
     border :none;
+    color: var(--dark);
+  } */
+
+  .bg-violet {
+    background-color: #8800ff;
+  }
+
+  .bg-violet:hover {
+    background-color: var(--light);
+    color: #000000;
+  }
+
+  .badge:hover {
+    background-color: var(--light) !important;
     color: var(--dark);
   }
 
@@ -409,48 +439,20 @@
   opacity: 0 !important;
 }
 
+.bg-pink:hover {
+  background-color: var(--light);
+  color: #001b54;
+}
+
+.badge>.bg-success:hover {
+  cursor: pointer;
+  background-color: var(--light);
+  color: var(--dark);
+}
 
 
 /* end chat css */
 
 
-.bg-secondary-light {
-  background-color: #f1f0f0;
-}
 
-.bg-success-light {
-  background-color: #d4edda;
-}
-
-.bg-danger-light {
-  background-color: #f8d7da;
-}
-
-.bg-warning-light {
-  background-color: #fff3cd;
-}
-
-.bg-info-light {
-  background-color: #d1ecf1;
-}
-
-.bg-light-light {
-  background-color: #fefefe;
-}
-
-.bg-dark-light {
-  background-color: #d6d8d9;
-}
-
-.bg-white-light {
-  background-color: #ffffff;
-}
-
-.bg-secondary-light:hover {
-  background-color: #f1f0f0;
-}
-
-.bg-primary-light {
-  background-color: #95b3f4;
-}
 

@@ -9,9 +9,11 @@ import Accordion from 'react-bootstrap/Accordion';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faEnvelope, faChevronLeft, faClone, faPhone, faUser } from '@fortawesome/fontawesome-free-solid'
+import { faEnvelope, faChevronLeft, faClone, faPhone } from '@fortawesome/fontawesome-free-solid'
 
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import SpanControl from '../components/SpanControl'
+import StudentChart from '../components/StudentChart'
 
 const Members = () => {
 
@@ -25,6 +27,9 @@ const Members = () => {
     const [email, setEmail] = useState('');
     const [course, setCourse] = useState([]);
     const { state } = useLocation();
+    const [vigrid, setVigrid] = useState(0);
+    const [normal, setNormal] = useState(0);
+    const [total, setTotal] = useState(0);
 
 
 
@@ -143,6 +148,14 @@ const Members = () => {
 
     }
 
+    const notregispreservnum = async () => {
+
+        // const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
+        // setMembers(data.members.filter((member) => member.numpreserv === 0 && member.status !== 'WITHDRAW'));
+        setMembers(memberSummary.notregispreservmembers);
+
+    }
+
 
     const notwithdrawall = async () => {
 
@@ -166,6 +179,10 @@ const Members = () => {
     const fetchStudent = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
         setMembers(data.members);
+        setVigrid(data.members.filter((member) => member.status === 'C1').length);
+        setNormal(data.members.filter((member) => member.status === 'R').length);
+        setTotal(data.members.length);
+        // setVigrid(data.members.filter((status) => status === 'C1').length);
         console.log(data.members);
     }
 
@@ -252,43 +269,46 @@ const Members = () => {
                         </div>
                     </div>
 
-                    {/* จำนวนนักศึกษา */}
-                    <div className="col-md-6 mx-auto">
-                        <div className="">
-                            <div className=" text-center d-flex justify-content-start align-items-center">
-
-                                <div>
-
-                                    <button className="btn btn-primary mx-2" onClick={fetchStudent}>จำนวนนักศึกษาทั้งหมด {members.length}{' '}  <FontAwesomeIcon icon={faUser} />
-                                    </button>
-                                </div>
-
-                                <div>
-                                    <small className="p-1 btn btn-success mx-2 my-2 position-relative" onClick={checkStatus2}>ปกติ
-                                        <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                            {members.filter((member) => member.status === 'R').length}
-                                        </span>
-                                    </small>
-                                </div>
-
-                                <div>
-                                    <small className="btn mx-2 my-2 btn-warning position-relative" onClick={checkStatus1}>วิกฤติ {' '}
-                                        <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                            {members.filter((member) => member.status === 'C1').length}
-                                        </span>
-                                    </small>
-                                    {/* clear filter fontawesome refresh */}
-                                    <button className="btn btn-dark " onClick={clearFilter}>ล้างการกรอง{' '}
-                                        {/* <FontAwesomeIcon icon={faRotateRight} /> */}
-                                        {/* <FontAwesomeIcon icon={faArrowsRotate} /> */}
-
-                                        <FontAwesomeIcon icon={faCircleXmark} />
-                                    </button>
-
-                                </div>
+                    {/*  */}
+                    <div className="row">
+                        <div className="col mx-auto d-flex m-2 justify-content-start align-items-center">
 
 
-                            </div>
+
+                            <span className="badge bg-primary mx-2 position-relative p-2 form-control" onClick={fetchStudent}>จำนวนทั้งหมด
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {total}
+                                    {/* {members.length}{' '} */}
+                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
+                                </span>
+                            </span>
+
+
+
+
+                            <span className="badge bg-success mx-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {normal}
+                                    {/* {members.filter((member) => member.status === 'R').length} */}
+                                </span>
+                            </span>
+
+
+
+                            <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {vigrid}
+                                    {/* {members.filter((member) => member.status === 'C1').length} */}
+                                </span>
+                            </span>
+
+                            {/* clear filter fontawesome refresh */}
+                            <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset
+
+                                {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
+                            </span>
+
+
                         </div>
                     </div>
 
@@ -297,76 +317,87 @@ const Members = () => {
 
                 </div>
             </div>
+
+
+
             <div className="container mt-2 border rounded-3 shadow " style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(10px)',
             }}>
+                {/* <StudentChart memberSummary={memberSummary} /> */}
                 <div className="row">
-                    <div className="col-md mx-auto   ">
+                    <div className="col mx-auto d-flex flex-column align-items-around  m-2 ">
 
 
-                        {/* {memberSummary.confirmallnum !== 0 && */}
+                        {memberSummary.confirmallnum !== 0 &&
 
-                        <button className={`btn  btn-success mx-2 my-2 position-relative ${memberSummary.confirmallmembers === 0 ? 'disabled' : ''}`} onClick={confirmallnum} >ยืนยันลงทะเบียน
-                            <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                            <span className={`badge bg-success w-50 mx-auto position-relative py-2 my-1  mx-2  ${memberSummary.confirmallmembers === 0 ? 'disabled' : ''}`} onClick={confirmallnum} >ยืนยันลงทะเบียน
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
 
-                                {memberSummary.confirmallnum}
+                                    {memberSummary.confirmallnum}
+                                </span>
                             </span>
-                        </button>
 
-                        {/* } */}
+                        }
 
-                        {/* {memberSummary.fundnum !== 0 && */}
+                        {memberSummary.fundnum !== 0 &&
 
-                        <button className={`btn btn-violet mx-2 my-2 position-relative ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
-                            ทุนการศึกษา
-                            <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                {memberSummary.fundnum}
+                            <span className={`badge bg-violet w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
+                                ทุนการศึกษา
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {memberSummary.fundnum}
+                                </span>
                             </span>
-                        </button>
-                        {/* } */}
+                        }
 
+                        {memberSummary.notconfirmallnum !== 0 &&
+                            <span className={`badge bg-secondary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.notconfirmallnum === 0 ? 'disabled' : ''}`} onClick={notconfirmallnum}>ยังไม่ยืนยัน
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
 
-                        {/* {memberSummary.notconfirmallnum !== 0 && */}
-                        <button className={`btn btn-secondary mx-2 my-2 position-relative ${memberSummary.notconfirmallnum === 0 ? 'disabled' : ''}`} onClick={notconfirmallnum}>ยังไม่ยืนยัน
-                            <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-
-                                {memberSummary.notconfirmallnum}
+                                    {memberSummary.notconfirmallnum}
+                                </span>
                             </span>
-                        </button>
-                        {/* } */}
+                        }
 
-                        {/* {memberSummary.notregispreservnum !== 0 && */}
-                        <button className={`btn btn-warning mx-2 my-2 position-relative ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notprevervnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notregispreservnum}</span></button>
-                        {/* } */}
+                        {memberSummary.notregispreservnum !== 0 &&
+                            <span className={`badge bg-warning position-relative w-50 py-2 mx-auto my-1 ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notregispreservnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notregispreservnum}</span></span>
+                        }
 
 
-                        {/* {memberSummary.preservnum !== 0 && */}
-                        <button className={`btn btn-dark  mx-2 my-2 position-relative ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
-                            onClick={preservnum}
-                        >รักษาสภาพ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.preservnum}</span></button>
-                        {/* } */}
+                        {memberSummary.preservnum !== 0 &&
+                            <span className={`badge bg-dark w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
+                                onClick={preservnum}
+                            >รักษาสภาพ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.preservnum}</span></span>
+                        }
 
-                        {/* {memberSummary.withdrawallnum !== 0 && */}
-                        <button className={`btn btn-primary  mx-2 my-2 position-relative ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></button>
-                        {/* } */}
 
-                        {/* {memberSummary.notwithdrawallnum !== 0 && */}
-                        <button className={`btn btn-danger  mx-2 my-2 position-relative ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></button>
-                        {/* } */}
+                        {memberSummary.withdrawallnum !== 0 &&
+                            <span className={`badge btn-primary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
+                        }
 
 
 
-                        {/* {memberSummary.paidunsuccessnum !== 0 && */}
-                        <button className={`btn bg-pink mx-3 position-relative ${memberSummary.paidunsuccessnum === 0 ? 'disabled' : ''}`}
-                            onClick={paidUnsccess}>ค้างชำระค่าเทอม <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidunsuccessnum}</span></button>
-                        {/* } */}
+                        {memberSummary.notwithdrawallnum !== 0 ?
+                            <span className={`badge bg-danger w-50 mx-auto position-relative py-2 my-1 m-2  mx-2 ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></span>
+                            : null
+                        }
 
-                        {/* {memberSummary.paidsuccessnum !== 0 && */}
 
-                        <button className={`btn btn-primary position-relative ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
-                            onClick={paidsuccessnum}>ชำระค่าเทอมเรียบร้อย <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></button>
-                        {/* } */}
+
+
+                        {memberSummary.paidunsuccessnum !== 0 &&
+                            <span className={`badge bg-pink w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.paidunsuccessnum === 0 ? 'disabled' : ''}`}
+                                onClick={paidUnsccess}>ค้างชำระค่าเทอม <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidunsuccessnum}</span></span>
+                        }
+
+
+
+                        {memberSummary.paidsuccessnum !== 0 &&
+
+                            <span className={`badge btn-primary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
+                                onClick={paidsuccessnum}>ชำระค่าเทอมเรียบร้อย <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></span>
+                        }
+
 
                     </div>
 
@@ -375,7 +406,7 @@ const Members = () => {
             </div >
             <div className="row  mb-3">
                 {members.map((member, index) => (
-                    <div className="col-lg-4 col-md mx-auto p-2" key={member.id}>
+                    <div className="col-lg-4 col-md-6 mx-auto p-2" key={member.id}>
                         <div className={`card h-100 `}>
                             <div className="card-body">
 
@@ -399,7 +430,7 @@ const Members = () => {
 
                                         <small className="card-text text-muted " >
                                             {/* <FontAwesomeIcon icon={faEnvelope} /> */}
-                                            <span className='badge bg-dark text-light m-2' onClick={e => openModal(member.email)}>{member.email}</span>
+                                            <span className='badge bg-dark  m-2' onClick={e => openModal(member.email)}>{member.email}</span>
                                             {' '}
                                             <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.email)} />
                                             {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
@@ -407,7 +438,7 @@ const Members = () => {
                                         </small>
                                         <small className="card-text text-muted " >
                                             {/* <FontAwesomeIcon icon={faEnvelope} /> */}
-                                            <span className='badge bg-dark text-light m-2' onClick={e => openModal(member.microsoftid)}>{member.microsoftid}</span>
+                                            <span className='badge bg-dark  m-2' onClick={e => openModal(member.microsoftid)}>{member.microsoftid}</span>
                                             {' '}
                                             <FontAwesomeIcon icon={faClone} onClick={() => copyToClipboard(member.microsoftid)} />
                                             {/* <button className="btn btn-sm " onClick={() => copyToClipboard(member.email)}>copy</button> */}
@@ -415,7 +446,7 @@ const Members = () => {
 
                                         <div className='d-flex align-items-center  justify-content-center'>
                                             {/* <span>เบอร์โทรติดต่อ {' '} */}
-                                            <span className="badge bg-dark text-light 
+                                            <span className="badge bg-dark  
                                         m-2">
                                                 <a href={`tel:${member.phone}`} className='nav-link'><FontAwesomeIcon icon={faPhone} />{' '}
                                                     {member.phone}
@@ -501,14 +532,16 @@ const Members = () => {
 
                                     {/* <div className="badge bg-info mx-2" >{member.fundname}</div> */}
 
-                                    {(member.sumaccmoney >= member.sumregismoney) || member.fundtype === 'Y' ? null :
+                                    {/* {(member.numcourse > 0 && member.sumaccmoney >= member.sumregismoney) || member.fundtype === 'Y' ? null :
                                         <div>
 
                                             <span className={`badge bg-pink rounded-pill`}>ค้างชำระค่าเทอม</span>
-                                            {/* <div className="badge bg-violet mx-2" >{member.fundname}</div> */}
+                                            
                                         </div>
 
-                                    }
+                                    } */}
+                                    {(member.numcourse > 0 && member.sumaccmoney < member.sumregismoney && member.fundname !== '') ? <span className={`badge bg-pink rounded-pill`}>ค้างชำระค่าเทอม</span> : null}
+
                                 </div>
 
 

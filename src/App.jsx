@@ -18,6 +18,7 @@ import CourseRegis from './components/CourseRegis';
 import Student from './components/Student';
 import Chat from './components/Chat';
 import StudentCourse from './components/StudentCourse';
+import PdfMerge from './components/PdfMerge';
 
 
 
@@ -78,6 +79,7 @@ const App = () => {
           <Route path="/student" element={<Student />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/studentcourse" element={<StudentCourse />} />
+          <Route path="/pdfmerge" element={<PdfMerge />} />
         </Routes>
       </Container>
 
