@@ -30,8 +30,8 @@ const Members = () => {
     const [vigrid, setVigrid] = useState(0);
     const [normal, setNormal] = useState(0);
     const [total, setTotal] = useState(0);
-    const [graduate ,setGraduate] = useState(0);
-    const [unGraduate,setUngraduate] = useState(0);
+    const [graduate, setGraduate] = useState(0);
+    const [unGraduate, setUngraduate] = useState(0);
 
 
 
@@ -67,7 +67,7 @@ const Members = () => {
 
     const unGraduateFetch = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
-        setMembers(data.members.filter((member) => member.status !== 'GRADUATE' &&  member.status !== 'WITHDRAW'));
+        setMembers(data.members.filter((member) => member.status !== 'GRADUATE' && member.status !== 'WITHDRAW'));
     }
 
 
@@ -141,7 +141,7 @@ const Members = () => {
     }
 
     // *** mac edit add graduate function ***
-    
+
     //  end mac edit graduate function 
 
     const paidUnsccess = async () => {
@@ -200,7 +200,7 @@ const Members = () => {
         setVigrid(data.members.filter((member) => member.status === 'C1').length);
         setNormal(data.members.filter((member) => member.status === 'R').length);
         setGraduate(data.members.filter((member) => member.status === 'GRADUATE').length);
-        setUngraduate(data.members.filter((member) =>  member.status !== 'GRADUATE' && member.status !== 'WITHDRAW').length)
+        setUngraduate(data.members.filter((member) => member.status !== 'GRADUATE' && member.status !== 'WITHDRAW').length)
         setTotal(data.members.length);
         // setVigrid(data.members.filter((status) => status === 'C1').length);
         console.log(data.members);
@@ -280,7 +280,7 @@ const Members = () => {
                             <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
                                 onChange={handleSearch}
                             />
-                       
+
                             {/* <span className='field-icon' >
 
                                 <FontAwesomeIcon icon={faCircleXmark} />
@@ -320,10 +320,10 @@ const Members = () => {
 
 
 
-                            
 
 
-                          
+
+
 
                             {/* clear filter fontawesome refresh */}
                             {/* <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset */}
@@ -333,29 +333,27 @@ const Members = () => {
 
 
                         </div>
-                        <div className="row">
-                        <div className="col-md-4 mx-auto text-center">
-                        <span className="badge bg-success mx-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
+
+                    </div>
+                    <div className="row">
+                        <div className="col-sm d-flex mx-auto m-2 justify-content-start align-items-center">
+                            <span className="badge bg-success mx-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {normal}
                                     {/* {members.filter((member) => member.status === 'R').length} */}
                                 </span>
                             </span>
-                        </div>
 
-                           <div className="col-md-4 mx-auto text-center">
-                           {vigrid > 0 && 
-                            <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                    {vigrid}
-                                    {/* {members.filter((member) => member.status === 'C1').length} */}
+                            {vigrid > 0 &&
+                                <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
+                                    <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                        {vigrid}
+                                        {/* {members.filter((member) => member.status === 'C1').length} */}
+                                    </span>
                                 </span>
-                            </span>
-                          }
-                           </div>
+                            }
                         </div>
                     </div>
-
 
 
 
