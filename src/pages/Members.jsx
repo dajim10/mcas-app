@@ -30,6 +30,8 @@ const Members = () => {
     const [vigrid, setVigrid] = useState(0);
     const [normal, setNormal] = useState(0);
     const [total, setTotal] = useState(0);
+    const [graduate ,setGraduate] = useState(0);
+    const [unGraduate,setUngraduate] = useState(0);
 
 
 
@@ -56,6 +58,16 @@ const Members = () => {
     const checkStatus2 = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
         setMembers(data.members.filter((member) => member.status === 'R'));
+    }
+
+    const graduateFetch = async () => {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
+        setMembers(data.members.filter((member) => member.status === 'GRADUATE'));
+    }
+
+    const unGraduateFetch = async () => {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
+        setMembers(data.members.filter((member) => member.status !== 'GRADUATE' &&  member.status !== 'WITHDRAW'));
     }
 
 
@@ -187,6 +199,8 @@ const Members = () => {
         setMembers(data.members);
         setVigrid(data.members.filter((member) => member.status === 'C1').length);
         setNormal(data.members.filter((member) => member.status === 'R').length);
+        setGraduate(data.members.filter((member) => member.status === 'GRADUATE').length);
+        setUngraduate(data.members.filter((member) =>  member.status !== 'GRADUATE' && member.status !== 'WITHDRAW').length)
         setTotal(data.members.length);
         // setVigrid(data.members.filter((status) => status === 'C1').length);
         console.log(data.members);
@@ -277,13 +291,27 @@ const Members = () => {
 
                     {/*  */}
                     <div className="row">
-                        <div className="col mx-auto d-flex m-2 justify-content-start align-items-center">
+                        <div className="col-sm d-flex mx-auto m-2 justify-content-start align-items-center">
 
 
 
-                            <span className="badge bg-primary mx-2 position-relative p-2 form-control" onClick={fetchStudent}>จำนวนทั้งหมด
+                            <span className="badge bg-dark mx-2 position-relative p-2 form-control" onClick={fetchStudent}>จำนวนทั้งหมด
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {total}
+                                </span>
+                            </span>
+
+                            <span className="badge bg-primary mx-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {graduate}
+                                    {/* {members.length}{' '} */}
+                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
+                                </span>
+                            </span>
+
+                            <span className="badge btn-primary  mx-2 position-relative p-2 form-control" onClick={unGraduateFetch}>กำลังศึกษา
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {unGraduate}
                                     {/* {members.length}{' '} */}
                                     {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
                                 </span>
@@ -300,7 +328,19 @@ const Members = () => {
                             </span>
 
 
-                          {vigrid > 0 && 
+                          
+
+                            {/* clear filter fontawesome refresh */}
+                            {/* <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset */}
+
+
+                            {/* </span> */}
+
+
+                        </div>
+                        <div className="row">
+                           <div className="col-md-4 mx-auto text-center">
+                           {vigrid > 0 && 
                             <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {vigrid}
@@ -308,14 +348,7 @@ const Members = () => {
                                 </span>
                             </span>
                           }
-
-                            {/* clear filter fontawesome refresh */}
-                            <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset
-
-                                {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
-                            </span>
-
-
+                           </div>
                         </div>
                     </div>
 
