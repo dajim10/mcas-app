@@ -100,6 +100,8 @@ const Members = () => {
                 return 'bg-success';
             case 'WITHDRAW' || 'CHEAT':
                 return 'bg-danger text-dark';
+            case 'GRADUATE':
+                return 'bg-primary text-light shadow';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
@@ -125,6 +127,10 @@ const Members = () => {
         setMembers(filterMembers);
 
     }
+
+    // *** mac edit add graduate function ***
+    
+    //  end mac edit graduate function 
 
     const paidUnsccess = async () => {
 
@@ -294,13 +300,14 @@ const Members = () => {
                             </span>
 
 
-
+                          {vigrid > 0 && 
                             <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {vigrid}
                                     {/* {members.filter((member) => member.status === 'C1').length} */}
                                 </span>
                             </span>
+                          }
 
                             {/* clear filter fontawesome refresh */}
                             <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset
@@ -397,6 +404,8 @@ const Members = () => {
                             <span className={`badge btn-primary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
                                 onClick={paidsuccessnum}>ชำระค่าเทอมเรียบร้อย <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></span>
                         }
+
+                        {members.statusname}
 
 
                     </div>
