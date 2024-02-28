@@ -280,7 +280,7 @@ const Members = () => {
                             <input type="text" className="form-control" placeholder="ค้นหานักศึกษา" aria-label="Recipient's username" aria-describedby="button-addon2"
                                 onChange={handleSearch}
                             />
-
+                       
                             {/* <span className='field-icon' >
 
                                 <FontAwesomeIcon icon={faCircleXmark} />
@@ -334,6 +334,14 @@ const Members = () => {
 
                         </div>
                         <div className="row">
+                        <div className="col-md-4 mx-auto text-center">
+                        <span className="badge bg-success mx-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {normal}
+                                    {/* {members.filter((member) => member.status === 'R').length} */}
+                                </span>
+                            </span>
+                        </div>
 
                            <div className="col-md-4 mx-auto text-center">
                            {vigrid > 0 && 

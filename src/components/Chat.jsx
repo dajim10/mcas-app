@@ -76,6 +76,9 @@ function Chat({ socket, username, room }) {
                     <div ref={messagesEndRef} />
                 </div>
             </div>
+
+
+
             <div className="chat-footer">
                 <input
                     style={{
