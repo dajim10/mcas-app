@@ -114,6 +114,8 @@ const Members = () => {
                 return 'bg-danger text-dark';
             case 'GRADUATE':
                 return 'bg-primary text-light shadow';
+            case 'RETIRE':
+                return 'bg-secondary text-dark';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
