@@ -3,6 +3,8 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import Back from './Back';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import Accordion from 'react-bootstrap/Accordion'
+
 
 const CourseRegis = () => {
     const navigate = useNavigate();
@@ -42,6 +44,30 @@ const CourseRegis = () => {
     }
         , []);
 
+    const statusApprove = (status) => {
+        switch (status) {
+            case 'Y':
+                return <span className='badge bg-success ms-2'>อนุมัติ</span>
+            case 'E':
+                return <span className='badge bg-warning text-dark ms-2'>ยังไม่อนุมัติ</span>
+            case 'N':
+                return <span className='badge bg-danger ms-2'>ไม่อนุญาตให้ถอน</span>
+            default:
+                return;
+        }
+
+    }
+
+    const confirmStatus = (status) => {
+        if (status === 'R') {
+            return <span className='badge bg-secondary  ms-2'></span>
+        } else if (status === 'W') {
+            return <span className='badge bg-success'>อนุมัติ</span>
+        } else {
+            return 'ไม่อนุมัติ'
+        }
+    }
+
 
     return (
         <div className='container mt-2'>
@@ -49,7 +75,7 @@ const CourseRegis = () => {
             <div className="col-lg-6 mx-auto">
                 <div className="card">
                     <div className="card-body">
-                        {/* <h5 className="card-title">ชื่อ : {stateData.name} </h5> */}
+
                         <div className="d-flex flex-column  align-items-center">
                             <img src={state.pic} alt="pic" width="100" className='rounded-3 m-2 border shadow' />
 
@@ -85,8 +111,72 @@ const CourseRegis = () => {
                         <div className=" p-2">
 
                             <p className='text-center mb-2'>รายวิชาลงทะเบียน {studentData.text2}</p>
+                            <Accordion>
+                                {studentData.course?.map((item, index) =>
+                                    <Accordion.Item eventKey={index}>
+                                        <>
+                                            <Accordion.Header key={index} >
+                                                <span className="badge bg-primary mx-2 rounded-pill">{index + 1}</span>
+                                                <span className='badge bg-dark text-wrap' style={{ width: '100%', textAlign: 'left' }}>{item.coursename}</span>
+                                                {confirmStatus(item.coursestatus)
+                                                }
+                                            </Accordion.Header>
+                                            <Accordion.Body>
 
-                            {typeof course !== 'undefined' && course.map((item, index) =>
+                                                <ul className='list-group'>
+                                                    <li className="list-group-item badge ">
+                                                        รหัสวิชา :
+                                                        {item.courseid}
+                                                    </li>
+
+                                                    <li className="list-group-item badge">
+                                                        {item.vicecampusname}
+                                                        <div>
+                                                            ผอ.สวท./รองอธิการ
+                                                            {statusApprove(item.vicecampusok)}
+                                                        </div>
+                                                    </li>
+
+                                                    <li className="list-group-item badge">
+                                                        <div>
+                                                            {item.deanname}
+                                                        </div>
+                                                        คณบดี/ผอ.วิทยาลัย {statusApprove(item.deanok)}
+                                                    </li>
+                                                    <li className="list-group-item badge text-warp">
+                                                        {item.vicedeanname}
+
+                                                        <div>
+                                                            รองคณบดีฝ่ายวิชาการ / รองผอ.ฝ่ายวิชาการ
+                                                            {statusApprove(item.vicedeanok)}</div>
+                                                    </li>
+                                                    <li className="list-group-item badge">
+                                                        อ.ที่ปรึกษา : {item.advisorname} {statusApprove(item.advisorok)}
+                                                    </li>
+                                                    <li className="list-group-item badge">
+                                                        หัวหน้าหลักสูตร : {item.majorname} {statusApprove(item.majorok)}
+                                                    </li>
+                                                    <li className="list-group-item badge">
+                                                        ฝ่ายทะเบียน : {item.officername} {statusApprove(item.officerok)}
+                                                    </li>
+
+
+
+
+
+
+                                                </ul>
+
+
+                                            </Accordion.Body>
+                                        </>
+
+
+                                    </Accordion.Item>
+                                )}
+                            </Accordion>
+
+                            {/* {typeof course !== 'undefined' && course.map((item, index) =>
                                 <ul className="list-group" key={index}>
                                     <li className={`list-group-item d-flex justify-content-around align-items-center rounded-pill my-1 ${index % 2 === 0 && 'bg-info-light shadow'}`} >
 
@@ -114,30 +204,12 @@ const CourseRegis = () => {
                                             {item.coursestatus === 'W' && <span className={`badge bg-danger rounded-pill`}>{item.coursestatus}</span>}
                                         </div>
 
-                                        {/* <div className="d-flex" style={{ width: '100%' }}>
-                                            <span
-                                                className='badge text-wrap d-block text-dark'
-                                                style={{ width: '100%', textAlign: 'left' }}
-                                            >
-                                                {item.coursename}
-                                            </span>
-
-                                            <span className={`badge text-wrap justify-content-center align-items-center text-center ${item.advisorok === 'Y' ? 'bg-success' : 'bg-danger'} rounded-pill`}>{item.advisorok}</span>
-                                            {item.coursestatus === 'W' && <span className={`badge bg-warning rounded-pill`}>{item.coursestatus}</span>}
-
-
-
-                                        </div> */}
-
-
-                                        {/* <span className={`badge ${course.grade === 'F' ? 'bg-danger' : 'bg-primary'} rounded-pill`}>
-{course.grade}
-</span> */}
+                                       
 
                                     </li>
                                 </ul>
                             )
-                            }
+                            } */}
 
 
 

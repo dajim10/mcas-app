@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faMailBulk, faUser, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faMailBulk, faUser, faCheck, faXmark, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+// import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-cube';
@@ -34,6 +35,7 @@ const Student = () => {
     const [regis, setRegis] = useState([]);
     const [course, setCourse] = useState([]);
     const [approve, setApprove] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     const openModal = (e) => {
         // const email = e;x
@@ -50,11 +52,33 @@ const Student = () => {
     };
 
 
+    const checkStudentStatus = (studentstatus, studentstatusname) => {
+        if (studentstatus === 'R') {
+            return (
+                <span className='badge bg-success' style={{ width: '50px' }}>
+                    {studentstatusname}
+
+                </span>
+            )
+        } else {
+            return (
+                <span className='badge bg-warning'>
+                    {studentstatus} {studentstatusname}
+
+                </span>
+            )
+        }
+    }
+
 
 
 
 
     useEffect(() => {
+
+        if (window.innerWidth < 768) {
+            setIsSmallScreen(true);
+        }
         if (!token) {
             window.location.href = '/login';
         } else {
@@ -97,6 +121,8 @@ const Student = () => {
 
 
 
+
+
     return (
         <div className='container mt-2'>
 
@@ -109,28 +135,42 @@ const Student = () => {
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>ข้อมูลส่วนบุคคล</Accordion.Header>
                             <Accordion.Body>
-                                <p className="w-100">ชื่อ : {data.name}</p>
-                                <p className="card-text">รหัสนักศึกษา : {studentData.id}</p>
-                                <p className="card-text">สาขา : {data.secname}</p>
-                                <p className="card-text">คณะ : {data.facname}</p>
-                                <p className='card-text'>เกรดเฉลี่ยสะสม <span className='badge bg-dark'>{studentData.gpa}</span></p>
-                                <p className='card-text'>สถานะ <span className='badge bg-dark'>
-                                    {studentData.statusname}</span></p>
-                                <div className="d-flex justify-content-center  align-items-center">
-                                    <span className='badge bg-dark m-2'>หน่วยกิตที่สอบผ่าน <span className='badge bg-success' >{studentData.earncredit}</span></span>
-                                    <span className='badge bg-dark m-2'>หน่วยกิตที่ลงทะเบียน <span className='badge bg-primary'>{studentData.regiscredit}</span></span>
+                                <div className="d-flex flex-column justify-content-start align-items-start">
+                                    <span className="card-text">ชื่อ : {data.name}</span>
+                                    <span className="card-text">รหัสนักศึกษา : {studentData.id}</span>
+                                    <span className="card-text">สาขา : {data.secname}</span>
+                                    <span className="card-text">คณะ : {data.facname}</span>
+                                    <span className='card-text'>เกรดเฉลี่ยสะสม <span className='badge bg-dark'>{studentData.gpa}</span></span>
+                                    <span className='card-text'>สถานะ {' : '}
+
+                                        {checkStudentStatus(studentData.studentstatus, studentData.studentstatusname)}
+                                        {/* <span className='badge bg-dark'>
+                                            {studentData.studentstatus} {studentData.studentstatusname}
+
+                                        </span> */}
+
+                                    </span>
+                                </div>
+                                <div className=" justify-content-center  align-items-center">
+
+                                    <div>
+                                        <span className='badge bg-dark'>หน่วยกิตที่สอบผ่าน <span className='badge bg-success' >{studentData.earncredit}</span></span>
+                                    </div>
+                                    <div>
+                                        <span className='badge bg-dark'>หน่วยกิตที่ลงทะเบียน <span className='badge bg-primary'>{studentData.regiscredit}</span></span>
+                                    </div>
                                 </div>
                                 <hr />
                                 อาจารย์ที่ปรึกษา :
                                 {studentData.supervisor?.map((item, index) => (
                                     <div className="d-flex flex-column justify-content-around " key={index}>
 
-                                        <div>
-                                            <FontAwesomeIcon icon={faUser} className='text-dark' />
+                                        <div >
+                                            <FontAwesomeIcon icon={faUser} className='text-dark ' style={{ width: '20px' }} />
                                             <span className="badge bg-primary mx-2">{item.supervisor}</span>
                                         </div>
                                         <div>
-                                            <FontAwesomeIcon icon={faMailBulk} className='text-dark' />
+                                            <FontAwesomeIcon icon={faMailBulk} className='text-dark ' style={{ width: '20px' }} />
                                             <span className="badge bg-primary mx-2">{item.epassport}</span>
                                             <span className="badge bg-dark text-light"
                                                 onClick={e => openModal(item.epassport)}
@@ -248,9 +288,15 @@ const Student = () => {
                                                 <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.gps}</span>
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
-                                                <span className="me-2">เกรดเฉลี่ยนสะสม</span>
-                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{studentData.gpa}</span>
+                                                <span className="me-2">เกรดเฉลี่ยสะสม</span>
+                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.gpa}</span>
                                             </div>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <span className="me-2">สถานะ</span>
+                                                {checkStudentStatus(semester.status, semester.statusname)}
+                                                {/* <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.statusname}</span> */}
+                                            </div>
+
                                         </div>
                                         <div className="d-flex justify-content-between">
 
@@ -318,6 +364,15 @@ const Student = () => {
                     </div>
                 </div>
             </div>
+            <nav className={`navbar-sm fixed-bottom justify-content-center ${isSmallScreen ? 'd-block' : 'd-none'}`} style={{ backgroundColor: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(10px)' }}>
+                <div className='p-1 d-flex justify-content-end'>
+                    <Link to='/login' className='link-item p-2 mx-2 badge rounded-pill bg-danger'>
+                        <FontAwesomeIcon icon={faRightFromBracket} />
+                    </Link>
+
+                    {/* <p className='text-dark text-center'>สำนักวิทยบริการและเทคโนโลยีสารสนเทศ</p> */}
+                </div>
+            </nav>
         </div>
     )
 }

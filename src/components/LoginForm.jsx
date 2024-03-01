@@ -50,6 +50,7 @@ const LoginForm = () => {
 
 
             const data = await response.json();
+            console.log(data);
             // Save the token in local storage
             if (!data.token) {
                 Swal.fire({

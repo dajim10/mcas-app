@@ -19,6 +19,7 @@ import Student from './components/Student';
 import Chat from './components/Chat';
 import StudentCourse from './components/StudentCourse';
 import PdfMerge from './components/PdfMerge';
+import CourseWithdraw from './components/CourseWithdraw';
 
 
 
@@ -34,6 +35,8 @@ const App = () => {
       setToken(localStorage.getItem('token'));
       setLoggedIn(true);
     }
+
+
 
     // check token timeout
     // const checkToken = async () => {
@@ -76,6 +79,8 @@ const App = () => {
           <Route path="/members/:classid" element={<Members />} />
           <Route path="/studentinfo/:id" element={<StudentSlider />} />
           <Route path="/courseregis/:id" element={<CourseRegis />} />
+          <Route path="/coursewithdraw/:id" element={<CourseWithdraw />} />
+
           <Route path="/student" element={<Student />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/studentcourse" element={<StudentCourse />} />

@@ -37,6 +37,41 @@ const StudentSlider = () => {
         }
     }, [token]);
 
+    const checkStatusName = (status) => {
+        switch (status) {
+            case 'R':
+                return 'ปกติ';
+            case 'C1':
+                return 'วิกฤติ';
+            case 'WITHDRAW':
+                return 'ถูกถอนชื่อ';
+            case 'CHEAT':
+                return 'ถูกพักการเรียน';
+            case 'GRADUATE':
+                return 'สำเร็จการศึกษา';
+            case 'RETIRE':
+                return 'Retire';
+            default:
+                return 'Unknown'; // Default status for unknown status
+        }
+    };
+
+    const getStatusTextClass = (status) => {
+        switch (status) {
+            case 'R':
+                return 'bg-success';
+            case 'WITHDRAW' || 'CHEAT':
+                return 'bg-danger ';
+            case 'GRADUATE':
+                return 'bg-primary  shadow';
+            case 'RETIRE':
+                return 'bg-secondary ';
+
+            default:
+                return 'bg-warning'; // Default color for unknown status
+        }
+    };
+
     return (
         <div>
             <h1 className='text-center'>ข้อมูลการเรียน</h1>
@@ -44,18 +79,28 @@ const StudentSlider = () => {
                 <div className="col-auto mx-auto">
                     <div className="card">
                         <div className="card-body">
-                            <img src={state.pic} alt="pic" width="100" className='rounded-3 m-2 border shadow' />
-                            <h5 className="card-title">รหัสนักศึกษา : {studentData.id}</h5>
-                            <p>ชื่อ - สกุล : {state.name}</p>
-                            <p>GPA. : {state.gpa}</p>
-                            <p>อาจารย์ที่ปรึกษา</p>
+                            <img src={state.pic} alt="pic" width="100" className='rounded-4 m-2  shadow-lg' />
+                            <p className="btn-primary text-light rounded shadow m-2 p-2 card-title">รหัสนักศึกษา : {studentData.id}</p>
+                            <span>ชื่อ - สกุล : {state.name}</span><br />
+                            <span>GPA. : {state.gpa}</span><br />
+                            <span className={`badge ${getStatusTextClass(state.status)} rounded-pill`}>สถานะ : {checkStatusName(state.status)}</span><br />
+                            <span>อาจารย์ที่ปรึกษา</span>
                             <div className='d-flex align-items-center justify-content-center'>
                                 {studentData.supervisor?.map((item, index) =>
                                     <li className="badge bg-dark" key={index}>{item.supervisor} {item.priority && <span className='badge rounded-pill bg-danger '>{item.priority}</span>}</li>
                                 )}
                             </div>
-                            <span className='badge bg-primary m-2'>หน่วยกิตลงทะเบียน : {studentData.regiscredit}</span>
-                            <span className='badge bg-success m-2'>หน่วยกิตสอบผ่าน : {studentData.earncredit}</span>
+                            <div className='d-flex align-items-center justify-content-center'>
+
+                                <span className='badge btn-primary rounded-pill mb-1 '>หน่วยกิตลงทะเบียน : {studentData.regiscredit}</span>
+
+                            </div>
+
+                            <div className='d-flex align-items-center justify-content-center'>
+
+                                <span className='badge bg-success rounded-pill'>หน่วยกิตสอบผ่าน : {studentData.earncredit}</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -105,7 +150,7 @@ const StudentSlider = () => {
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <span className="me-2">เกรดเฉลี่ยสะสม</span>
-                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{state.gpa}</span>
+                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.gpa}</span>
                                             </div>
                                         </div>
 

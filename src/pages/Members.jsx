@@ -32,6 +32,7 @@ const Members = () => {
     const [total, setTotal] = useState(0);
     const [graduate, setGraduate] = useState(0);
     const [unGraduate, setUngraduate] = useState(0);
+    const [retire, setRetire] = useState(0);
 
 
 
@@ -68,6 +69,11 @@ const Members = () => {
     const unGraduateFetch = async () => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
         setMembers(data.members.filter((member) => member.status !== 'GRADUATE' && member.status !== 'WITHDRAW'));
+    }
+
+    const retireFetch = async () => {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
+        setMembers(data.members.filter((member) => member.status === 'RETIRE'));
     }
 
 
@@ -204,6 +210,7 @@ const Members = () => {
         setGraduate(data.members.filter((member) => member.status === 'GRADUATE').length);
         setUngraduate(data.members.filter((member) => member.status !== 'GRADUATE' && member.status !== 'WITHDRAW').length)
         setTotal(data.members.length);
+        setRetire(data.members.filter((member) => member.status === 'RETIRE').length);
         // setVigrid(data.members.filter((status) => status === 'C1').length);
         console.log(data.members);
     }
@@ -237,7 +244,7 @@ const Members = () => {
                 {course.map((item, index) =>
 
                     <li className="nav-link" key={index}>
-                        <span className='badge bg-primary mx-2'>{index + 1}</span>
+                        <span className='badge bg-primary m-2'>{index + 1}</span>
                         <p className='badge bg-dark'>{item.courseid} {item.coursename}</p>
                     </li>
                 )
@@ -293,31 +300,24 @@ const Members = () => {
 
                     {/*  */}
                     <div className="row">
-                        <div className="col-sm d-flex mx-auto m-2 justify-content-start align-items-center">
+                        <div className="col-sm d-flex  justify-content-start align-items-center">
 
 
 
-                            <span className="badge bg-dark mx-2 position-relative p-2 form-control" onClick={fetchStudent}>จำนวนทั้งหมด
+                            <span className="badge bg-dark m-2 position-relative p-2 form-control" onClick={fetchStudent}>จำนวนทั้งหมด
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {total}
                                 </span>
                             </span>
 
-                            <span className="badge bg-primary mx-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
+                            <span className="badge bg-primary m-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {graduate}
-                                    {/* {members.length}{' '} */}
-                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
+
                                 </span>
                             </span>
 
-                            <span className="badge btn-primary  mx-2 position-relative p-2 form-control" onClick={unGraduateFetch}>กำลังศึกษา
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                    {unGraduate}
-                                    {/* {members.length}{' '} */}
-                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
-                                </span>
-                            </span>
+
 
 
 
@@ -328,7 +328,7 @@ const Members = () => {
 
 
                             {/* clear filter fontawesome refresh */}
-                            {/* <span className="badge bg-danger mx-2 p-2 form-control " onClick={clearFilter}>Reset */}
+                            {/* <span className="badge bg-danger m-2 p-2 form-control " onClick={clearFilter}>Reset */}
 
 
                             {/* </span> */}
@@ -338,8 +338,8 @@ const Members = () => {
 
                     </div>
                     <div className="row">
-                        <div className="col-sm d-flex mx-auto m-2 justify-content-start align-items-center">
-                            <span className="badge bg-success mx-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
+                        <div className="col-sm d-flex justify-content-start align-items-center">
+                            <span className="badge bg-success m-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {normal}
                                     {/* {members.filter((member) => member.status === 'R').length} */}
@@ -347,13 +347,21 @@ const Members = () => {
                             </span>
 
                             {vigrid > 0 &&
-                                <span className="badge bg-warning mx-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
+                                <span className="badge bg-warning m-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
                                     <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                         {vigrid}
                                         {/* {members.filter((member) => member.status === 'C1').length} */}
                                     </span>
                                 </span>
                             }
+
+                            <span className="badge bg-secondary text-dark m-2 position-relative p-2 form-control" onClick={retireFetch}>พ้นสภาพ
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                    {retire}
+                                    {/* {members.length}{' '} */}
+                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
+                                </span>
+                            </span>
                         </div>
                     </div>
 
@@ -370,13 +378,13 @@ const Members = () => {
             }}>
                 {/* <StudentChart memberSummary={memberSummary} /> */}
                 <div className="row">
-                    <div className="col mx-auto d-flex flex-column align-items-around  m-2 ">
+                    <div className="col-lg-6 col-md-6 col-sm    mt-2">
 
 
                         {memberSummary.confirmallnum !== 0 &&
 
-                            <span className={`badge bg-success w-50 mx-auto position-relative py-2 my-1  mx-2  ${memberSummary.confirmallmembers === 0 ? 'disabled' : ''}`} onClick={confirmallnum} >ยืนยันลงทะเบียน
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                            <span className={`badge bg-success m-2 position-relative py-2   ${memberSummary.confirmallmembers === 0 ? 'disabled' : ''}`} onClick={confirmallnum} >ยืนยันลงทะเบียน
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>
 
                                     {memberSummary.confirmallnum}
                                 </span>
@@ -386,16 +394,16 @@ const Members = () => {
 
                         {memberSummary.fundnum !== 0 &&
 
-                            <span className={`badge bg-violet w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
+                            <span className={`badge bg-violet      position-relative py-2    ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
                                 ทุนการศึกษา
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>
                                     {memberSummary.fundnum}
                                 </span>
                             </span>
                         }
 
                         {memberSummary.notconfirmallnum !== 0 &&
-                            <span className={`badge bg-secondary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.notconfirmallnum === 0 ? 'disabled' : ''}`} onClick={notconfirmallnum}>ยังไม่ยืนยัน
+                            <span className={`badge bg-secondary   m-2 position-relative py-2 my-1   ${memberSummary.notconfirmallnum === 0 ? 'disabled' : ''}`} onClick={notconfirmallnum}>ยังไม่ยืนยัน
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
 
                                     {memberSummary.notconfirmallnum}
@@ -404,25 +412,25 @@ const Members = () => {
                         }
 
                         {memberSummary.notregispreservnum !== 0 &&
-                            <span className={`badge bg-warning position-relative w-50 py-2 mx-auto my-1 ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notregispreservnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notregispreservnum}</span></span>
+                            <span className={`badge bg-warning position-relative   py-2    my-1 m-2  ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notregispreservnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>{memberSummary.notregispreservnum}</span></span>
                         }
 
 
                         {memberSummary.preservnum !== 0 &&
-                            <span className={`badge bg-dark w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
+                            <span className={`badge bg-dark      position-relative py-2   ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
                                 onClick={preservnum}
                             >รักษาสภาพ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.preservnum}</span></span>
                         }
 
 
                         {memberSummary.withdrawallnum !== 0 &&
-                            <span className={`badge btn-primary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
+                            <span className={`badge btn-primary    position-relative py-2 my-1 m-2  ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
                         }
 
 
 
                         {memberSummary.notwithdrawallnum !== 0 ?
-                            <span className={`badge bg-danger w-50 mx-auto position-relative py-2 my-1 m-2  mx-2 ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></span>
+                            <span className={`badge bg-danger      position-relative py-2 my-1 m-2  m-2  px-2 ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></span>
                             : null
                         }
 
@@ -430,7 +438,7 @@ const Members = () => {
 
 
                         {memberSummary.paidunsuccessnum !== 0 &&
-                            <span className={`badge bg-pink w-50 mx-auto position-relative py-2 my-1  mx-2 ${memberSummary.paidunsuccessnum === 0 ? 'disabled' : ''}`}
+                            <span className={`badge bg-pink  m-2 position-relative py-2  px-2 ${memberSummary.paidunsuccessnum === 0 ? 'disabled' : ''}`}
                                 onClick={paidUnsccess}>ค้างชำระค่าเทอม <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidunsuccessnum}</span></span>
                         }
 
@@ -438,8 +446,8 @@ const Members = () => {
 
                         {memberSummary.paidsuccessnum !== 0 &&
 
-                            <span className={`badge btn-primary w-50 mx-auto position-relative py-2 my-1 mx-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
-                                onClick={paidsuccessnum}>ชำระค่าเทอมเรียบร้อย <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></span>
+                            <span className={`badge btn-primary      position-relative py-2 my-1 m-2  px-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
+                                onClick={paidsuccessnum}>ชำระค่าเทอมครบ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></span>
                         }
 
                         {members.statusname}
@@ -452,7 +460,7 @@ const Members = () => {
             </div >
             <div className="row  mb-3">
                 {members.map((member, index) => (
-                    <div className="col-lg-4 col-md-6 mx-auto p-2" key={member.id}>
+                    <div className="col-lg-4 col-md-6    p-2" key={member.id}>
                         <div className={`card h-100 `}>
                             <div className="card-body">
 
@@ -515,6 +523,7 @@ const Members = () => {
                                             name: `${member.fname} ${member.lname}`,
                                             gpa: member.gpa,
                                             pic: member.pic,
+                                            status: member.status,
                                         }}>
 
                                         <span className="badge bg-dark  rounded-5 shadow">GPA. : {member.gpa}</span>
@@ -525,9 +534,10 @@ const Members = () => {
 
                                 <div style={{ position: 'absolute', top: '15px', left: '20px' }}>
 
-                                    <span className={`badge ${getStatusTextClass(member.status)} rounded-pill`}>{member.statusname}</span>
+                                    <span className={`badge ${getStatusTextClass(member.status)} rounded-pill`}
+                                        onClick={member.status === 'R' ? checkStatus2 : checkStatus1}>{member.statusname}</span>
 
-                                    <div className="badge rounded-pill bg-violet mx-2" >{member.fundname}</div>
+                                    <div className="badge rounded-pill bg-violet m-2" onClick={fundNum} >{member.fundname}</div>
 
 
                                 </div>
@@ -538,7 +548,7 @@ const Members = () => {
 
 
                                     {member.numcourse > 0 && member.numreserve !== 0 ?
-                                        // <Link className="badge btn bg-light text-dark rounded-pill  shadow btn-sm mx-2" onClick={() => navigate(`/courseregis/${member.id}`, { state: state })} >รายการลงทะเบียน
+                                        // <Link className="badge btn bg-light text-dark rounded-pill  shadow btn-sm m-2" onClick={() => navigate(`/courseregis/${member.id}`, { state: state })} >รายการลงทะเบียน
                                         // </Link> :
 
                                         // null}
@@ -555,16 +565,35 @@ const Members = () => {
 
                                             <span className="badge bg-dark  rounded-5 shadow">รายการลงทะเบียน</span>
 
+                                            {/* course withdraw  */}
+
+
+                                            {/* <span className="badge bg-dark  rounded-5 shadow">รายการถอนรายวิชา</span> */}
+
+
                                         </Link> : null}
+                                    <Link to={`/coursewithdraw/${member.id}`}
+                                        state={{
+                                            id: member.id,
+                                            name: `${member.fname} ${member.lname}`,
+                                            gpa: member.gpa,
+                                            pic: member.pic,
+                                            regiscredit: member.regiscredit,
+                                            earncredit: member.earncredit,
+                                        }}>
+
+                                        {member.withdrawall !== 0 ?
+                                            <span className="badge bg-dark  rounded-5 shadow">รายการถอนรายวิชา</span> : null
+                                        }
+                                    </Link>
 
 
 
 
 
+                                    {/* {member.numcourse > 0 && member.numreserve !== 0 ? <div className="badge btn bg-light text-dark rounded-pill  shadow btn-sm m-2" onClick={() => courseName(member.id)} >รายการลงทะเบียน</div> : null} */}
 
-                                    {/* {member.numcourse > 0 && member.numreserve !== 0 ? <div className="badge btn bg-light text-dark rounded-pill  shadow btn-sm mx-2" onClick={() => courseName(member.id)} >รายการลงทะเบียน</div> : null} */}
-
-                                    {member.numcourse === 0 && member.numreserve > 0 ? <div className="badge bg-dark mx-2" >ลงทะเบียนรักษาสภาพ</div> : null}
+                                    {member.numcourse === 0 && member.numreserve > 0 ? <div className="badge bg-dark m-2" >ลงทะเบียนรักษาสภาพ</div> : null}
                                 </div>
 
                                 {/* <div className="badge bg-dark" style={{ position: 'absolute', bottom: '30px', right: '15px' }}>{member.fundname}</div> */}
@@ -576,17 +605,23 @@ const Members = () => {
                                         <span className={`badge bg-dark rounded-pill`}>ลงทะเบียนรักษาสภาพ</span>
                                     }
 
-                                    {/* <div className="badge bg-info mx-2" >{member.fundname}</div> */}
+                                    {member.withdrawconfirm === member.withdrawall ? null :
 
-                                    {/* {(member.numcourse > 0 && member.sumaccmoney >= member.sumregismoney) || member.fundtype === 'Y' ? null :
-                                        <div>
+                                        <span className={`badge bg-danger rounded-pill`}>ถอนรายวิชาไม่สำเร็จ</span>
+                                    }
 
-                                            <span className={`badge bg-pink rounded-pill`}>ค้างชำระค่าเทอม</span>
-                                            
-                                        </div>
-
+                                    {/* {member.numcourse === 0 &&
+                                        <span className={`badge bg-danger rounded-pill`}>ไม่ลงทะเบียน</span>
                                     } */}
-                                    {(member.numcourse > 0 && member.sumaccmoney < member.sumregismoney && member.fundname !== '') ? <span className={`badge bg-pink rounded-pill`}>ค้างชำระค่าเทอม</span> : null}
+
+                                    {member.numcourse === 0 && member.numpreserv === 0 && (member.status === 'R' || member.status === 'C1' || member.status === 'P1' || member.status === 'P2' || member.status === 'P3' || member.status === 'CHEAT') ?
+                                        <span className={`badge bg-pink rounded-pill`}>ไม่รักษาสภาพ</span> : null
+                                    }
+
+
+                                    {(member.numcourse > 0 && member.sumaccmoney < member.sumregismoney) ? <span className={`badge bg-pink rounded-pill`} onClick={paidUnsccess}>ค้างชำระค่าเทอม</span> : null}
+
+
 
                                 </div>
 
