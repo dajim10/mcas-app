@@ -33,9 +33,25 @@ const Members = () => {
     const [graduate, setGraduate] = useState(0);
     const [unGraduate, setUngraduate] = useState(0);
     const [retire, setRetire] = useState(0);
+    const [studentStatus, setStudentStatus] = useState([]);
 
 
 
+    const checkStatusColor = (status) => {
+        switch (status) {
+            case 'R':
+                return 'bg-success';
+            case 'WITHDRAW':
+                return 'bg-danger text-dark';
+            case 'GRADUATE':
+                return 'bg-primary  shadow';
+            case 'RETIRE':
+                return 'bg-secondary text-dark';
+
+            default:
+                return 'bg-warning text-dark'; // Default color for unknown status
+        }
+    }
 
     const openModal = (e) => {
         // const email = e;
@@ -216,20 +232,22 @@ const Members = () => {
     }
 
     const fetchMemberSummary = async () => {
-        // https://api.rmutsv.ac.th/teacher/trace/404141NM_66/kitisak.w:bw6uP7dmTocCxQ0rSxPZyMxsQcNvZ4OtEMXXSt8DAT6YChOHS0recpyT8m2VeQZv
+
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/trace/${classid}/${token}`);
         setMemberSummary(data);
         console.log(data);
+        setStudentStatus(data.studentstatus);
+        console.log(data.studentstatus);
     }
 
     const fundNum = async () => {
-        // const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/teacher/class/${classid}/${token}`);
+
         setMembers(memberSummary.fundmembers);
-        // setMembers(data.members.filter((member) => member.fundname !== ''));
+
     }
 
     const courseName = (id) => {
-        // navigate(`/courseregis/${id}`);
+
         const apiEndpoint = `${import.meta.env.VITE_API_URL}/student/regis/${id}/${token}`;
         const fetchData = async () => {
             const response = await fetch(apiEndpoint);
@@ -310,41 +328,34 @@ const Members = () => {
                                 </span>
                             </span>
 
-                            <span className="badge bg-primary m-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
+                            {/* <span className="badge bg-primary m-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                     {graduate}
 
                                 </span>
-                            </span>
+                            </span> */}
 
                         </div>
 
                     </div>
                     <div className="row">
                         <div className="col-sm d-flex justify-content-start align-items-center">
-                            <span className="badge bg-success m-2 position-relative p-2 form-control" onClick={checkStatus2}>เกรดปกติ
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                    {normal}
-                                    {/* {members.filter((member) => member.status === 'R').length} */}
-                                </span>
-                            </span>
 
-                            {vigrid > 0 &&
-                                <span className="badge bg-warning m-2 position-relative p-2 form-control" onClick={checkStatus1}>เกรดวิกฤติ {' '}
+                            {/* studentStatus from api */}
+
+
+
+                            {studentStatus.map((status, index) => (
+                                <span key={index} className={`badge ${checkStatusColor(status.status)} m-2 position-relative p-2 form-control`} onClick={() => setMembers(status.Members)}>{status.statusname} {' '}
                                     <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                        {vigrid}
-                                        {/* {members.filter((member) => member.status === 'C1').length} */}
+                                        {status.count}
+
                                     </span>
                                 </span>
-                            }
+                            ))}
 
-                            <span className="badge bg-secondary text-dark m-2 position-relative p-2 form-control" onClick={retireFetch}>พ้นสภาพ
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                    {retire}
-                                    {/* {members.length}{' '} */}
-                                    {/* {memberSummary.confirmallnum + memberSummary.notregispreservnum} */}
-                                </span>
-                            </span>
+
+
                         </div>
                     </div>
 

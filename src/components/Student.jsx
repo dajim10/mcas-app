@@ -224,7 +224,7 @@ const Student = () => {
                                                     <span className="badge bg-dark mx-1">{item.officerok}</span> */}
 
 
-                                                    {item.coursestatus === 'W' && <span className={`badge bg-danger rounded-pill`}>{item.coursestatus}</span>}
+                                                    {item.coursestatus === 'W' && <span className={`badge bg-secondary rounded-pill`}>{item.coursestatus}</span>}
                                                 </div>
 
 

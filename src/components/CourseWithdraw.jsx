@@ -58,10 +58,8 @@ const CourseWithdraw = () => {
     const widrawStatus = (status) => {
         if (status === 'R') {
             return <span className='badge bg-secondary  ms-2'>รออนุมัติ</span>
-        } else if (status === 'Y') {
-            return <span className='badge bg-success'>อนุมัติ</span>
-        } else {
-            return 'ไม่อนุมัติ'
+        } else if (status === 'W') {
+            return <span className='badge bg-success ms-2'>อนุมัติ</span>
         }
     }
 
