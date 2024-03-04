@@ -317,23 +317,6 @@ const Members = () => {
                                 </span>
                             </span>
 
-
-
-
-
-
-
-
-
-
-
-                            {/* clear filter fontawesome refresh */}
-                            {/* <span className="badge bg-danger m-2 p-2 form-control " onClick={clearFilter}>Reset */}
-
-
-                            {/* </span> */}
-
-
                         </div>
 
                     </div>
@@ -394,7 +377,7 @@ const Members = () => {
 
                         {memberSummary.fundnum !== 0 &&
 
-                            <span className={`badge bg-violet      position-relative py-2    ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
+                            <span className={`badge bg-violet  m-2    position-relative py-2    ${memberSummary.fundnum === 0 ? 'disabled' : ''}`} onClick={fundNum} >
                                 ทุนการศึกษา
                                 <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>
                                     {memberSummary.fundnum}

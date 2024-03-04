@@ -84,10 +84,11 @@ const CourseRegis = () => {
                             <span>GPA. : {state.gpa}</span>
                             <span>อาจารย์ที่ปรึกษา</span>
                             <div className='d-flex align-items-center justify-content-start'>
-
-                                {studentData.supervisor?.map((item, index) =>
-                                    <li className="badge bg-dark" key={index}>{item.supervisor} {item.priority && <span className='badge rounded-pill bg-danger '>{item.priority}</span>}</li>
-                                )}
+                                <div className='d-flex flex-column'>
+                                    {studentData.supervisor?.map((item, index) =>
+                                        <li className="badge bg-dark" key={index}>{item.supervisor} {item.priority && <span className='badge rounded-pill bg-danger '>{item.priority}</span>}</li>
+                                    )}
+                                </div>
 
                             </div>
 
@@ -151,13 +152,13 @@ const CourseRegis = () => {
                                                             {statusApprove(item.vicedeanok)}</div>
                                                     </li>
                                                     <li className="list-group-item badge">
-                                                        อ.ที่ปรึกษา : {item.advisorname} {statusApprove(item.advisorok)}
+                                                        อ.ที่ปรึกษา {item.advisorname} {statusApprove(item.advisorok)}
                                                     </li>
                                                     <li className="list-group-item badge">
                                                         หัวหน้าหลักสูตร : {item.majorname} {statusApprove(item.majorok)}
                                                     </li>
                                                     <li className="list-group-item badge">
-                                                        ฝ่ายทะเบียน : {item.officername} {statusApprove(item.officerok)}
+                                                        จนท.วิชาการคณะ/วิทยาลัย  {statusApprove(item.officerok)}
                                                     </li>
 
 

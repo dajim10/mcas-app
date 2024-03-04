@@ -450,7 +450,15 @@
   color: var(--dark);
 }
 
-
+/* .accordion {
+	--bs-accordion-btn-color: ghostwhite;
+	--bs-accordion-btn-bg: rgba(255,255,255,0.5)
+	--bs-accordion-active-color: maroon;
+	--bs-accordion-active-bg: #36a88f;
+  --bs-accordion-body-bg: lightpink;
+  --bs-accordion-body-color: maroon;
+  --bs-accordion-body-border-color: maroon;
+} */
 /* end chat css */
 
 

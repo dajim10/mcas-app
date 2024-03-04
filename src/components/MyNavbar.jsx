@@ -84,8 +84,7 @@ const MyNavbar = () => {
                     {/* <Navbar expand="lg" className={`${smallScreen === true ? 'fixed-bottom' : 'sticky-top'}`} id="main-nav" */}
                     <Navbar expand="lg" className='sticky-top' id="main-nav"
                         style={{
-                            backgroundColor: 'rgba(255,255,255,0.5)',
-                            backdropFilter: 'blur(10px)'
+                            backgroundColor: 'rgb(255,255,255)'
                             , boxShadow: '0 0 10px #00000040'
                         }}
                     >
@@ -152,8 +151,7 @@ const MyNavbar = () => {
                 // <Navbar expand="lg" className={`${smallScreen === true ? 'fixed-bottom bg-success bg-gradient' : 'sticky-top'}`}
                 <Navbar expand="lg" className='sticky-top'
                     style={{
-                        backgroundColor: 'rgba(255,255,255,0.5)',
-                        backdropFilter: 'blur(10px)'
+                        backgroundColor: 'rgb(255,255,255)'
                         , boxShadow: '0 0 10px #00000040'
                     }}
                 >

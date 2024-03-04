@@ -364,7 +364,7 @@ const Student = () => {
                     </div>
                 </div>
             </div>
-            <nav className={`navbar-sm fixed-bottom justify-content-center ${isSmallScreen ? 'd-block' : 'd-none'}`} style={{ backgroundColor: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(10px)' }}>
+            <nav className={`navbar-sm fixed-bottom justify-content-center ${isSmallScreen ? 'd-block' : 'd-none'}`} style={{ backgroundColor: 'rgb(255,255,255)' }}>
                 <div className='p-1 d-flex justify-content-end'>
                     <Link to='/login' className='link-item p-2 mx-2 badge rounded-pill bg-danger'>
                         <FontAwesomeIcon icon={faRightFromBracket} />
