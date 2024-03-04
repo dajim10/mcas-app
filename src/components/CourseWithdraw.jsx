@@ -46,7 +46,7 @@ const CourseWithdraw = () => {
             case 'Y':
                 return <span className='badge bg-success ms-2'>อนุมัติ</span>
             case 'E':
-                return <span className='badge bg-warning text-dark ms-2'>ยังไม่อนุมัติ</span>
+                return <span className='badge bg-warning text-dark ms-2'>รออนุมัติ</span>
             case 'N':
                 return <span className='badge bg-danger ms-2'>ไม่อนุญาตให้ถอน</span>
             default:
@@ -57,9 +57,9 @@ const CourseWithdraw = () => {
 
     const widrawStatus = (status) => {
         if (status === 'R') {
-            return <span className='badge bg-secondary  ms-2'>รออนุมัติ</span>
+            return <span className='badge bg-danger  ms-2'>ไม่สมบูรณ์</span>
         } else if (status === 'W') {
-            return <span className='badge bg-success ms-2'>อนุมัติ</span>
+            return <span className='badge bg-success ms-2'>สมบูรณ์</span>
         }
     }
 
@@ -122,22 +122,7 @@ const CourseWithdraw = () => {
                                                 }
                                             </Accordion.Header>
                                             <Accordion.Body>
-                                                {/* "courseid": "02211002",
-            "coursename": "คณิตศาสตร์ 1",
-            "section": "2",
-            "coursetype": "วิชาในสาขา",
-            "dateupdate": "17-02-2024",
-            "timeupdate": "19:55:10",
-            "coursestatus": "R",
-            "instructionok": "E",
-            "instructionname": "รศ.ผกากรอง  เทพรักษ์",
-            "advisorok": "E",
-            "majorok": "E",
-            "majorname": "อ.ณัฐพล  หนูฤทธิ",
-            "majornameorg": "วิศวกรรมคอมพิวเตอร์",
-            "departmentok": "E",
-            "departmentname": "อ.นงนาฎ  ระวังวงศ์",
-            "departmentnameorg": "วิศวกรรมคอมพิวเตอร์" */}
+
                                                 <ul className='list-group'>
                                                     <li className="list-group-item badge ">รหัสวิชา : {item.courseid}</li>
                                                     <li className="list-group-item badge">กลุ่มเรียน : {item.section}</li>
@@ -145,7 +130,7 @@ const CourseWithdraw = () => {
                                                     {/* localdateString */}
 
                                                     <li className="list-group-item badge">วันที่ถอน : {item.dateupdate}</li>
-                                                    <li className="list-group-item badge">สถานะการขอถอนวิชา : {widrawStatus(item.coursestatus)}</li>
+                                                    <li className="list-group-item badge">สถานะการถอนรายวิชา : {widrawStatus(item.coursestatus)}</li>
                                                     <li className="list-group-item badge">อาจารย์ที่สอน : {item.instructionname}
                                                         {statusApprove(item.instructionok)}
 

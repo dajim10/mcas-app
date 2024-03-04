@@ -85,7 +85,7 @@ const StudentSlider = () => {
                             <span>GPA. : {state.gpa}</span><br />
                             <span className={`badge ${getStatusTextClass(state.status)} rounded-pill`}>สถานะ : {checkStatusName(state.status)}</span><br />
                             <span>อาจารย์ที่ปรึกษา</span>
-                            <div className='d-flex align-items-center justify-content-center'>
+                            <div className='d-flex flex-column align-items-center justify-content-center '>
                                 {studentData.supervisor?.map((item, index) =>
                                     <li className="badge bg-dark" key={index}>{item.supervisor} {item.priority && <span className='badge rounded-pill bg-danger '>{item.priority}</span>}</li>
                                 )}
@@ -150,7 +150,11 @@ const StudentSlider = () => {
                                             </div>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <span className="me-2">เกรดเฉลี่ยสะสม</span>
-                                                <span className="badge bg-dark text-light" style={{ width: '50px' }}>{semester.gpa}</span>
+                                                <span className="badge bg-dark text-light" style={{ width: '50px' }} >{semester.gpa}</span>
+                                            </div>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <span className="me-2">สถานะ</span>
+                                                <span className={`badge form-control ${semester.status === 'R' ? 'bg-success ' : 'bg-warning text-dark '} `} >{semester.statusname}</span>
                                             </div>
                                         </div>
 

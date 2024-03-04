@@ -47,6 +47,8 @@ const Members = () => {
                 return 'bg-primary  shadow';
             case 'RETIRE':
                 return 'bg-secondary text-dark';
+            case 'RESIGN':
+                return 'bg-danger text-dark';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
@@ -138,6 +140,8 @@ const Members = () => {
                 return 'bg-primary text-light shadow';
             case 'RETIRE':
                 return 'bg-secondary text-dark';
+            case 'RESIGN':
+                return 'bg-danger text-dark';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
@@ -529,7 +533,8 @@ const Members = () => {
                                 <div style={{ position: 'absolute', top: '15px', left: '20px' }}>
 
                                     <span className={`badge ${getStatusTextClass(member.status)} rounded-pill`}
-                                        onClick={member.status === 'R' ? checkStatus2 : checkStatus1}>{member.statusname}</span>
+
+                                    >{member.statusname}</span>
 
                                     <div className="badge rounded-pill bg-violet m-2" onClick={fundNum} >{member.fundname}</div>
 
