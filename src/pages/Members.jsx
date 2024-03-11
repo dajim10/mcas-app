@@ -42,13 +42,13 @@ const Members = () => {
             case 'R':
                 return 'bg-success';
             case 'WITHDRAW':
-                return 'bg-danger text-dark';
+                return 'bg-danger';
             case 'GRADUATE':
                 return 'bg-primary  shadow';
             case 'RETIRE':
                 return 'bg-secondary text-dark';
             case 'RESIGN':
-                return 'bg-danger text-dark';
+                return 'bg-danger ';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
@@ -135,13 +135,13 @@ const Members = () => {
             case 'R':
                 return 'bg-success';
             case 'WITHDRAW' || 'CHEAT':
-                return 'bg-danger text-dark';
+                return 'bg-danger ';
             case 'GRADUATE':
-                return 'bg-primary text-light shadow';
+                return 'bg-primary  shadow';
             case 'RETIRE':
-                return 'bg-secondary text-dark';
+                return 'bg-secondary ';
             case 'RESIGN':
-                return 'bg-danger text-dark';
+                return 'bg-danger ';
 
             default:
                 return 'bg-warning text-dark'; // Default color for unknown status
@@ -297,7 +297,7 @@ const Members = () => {
         <>
             {/* search input */}
             {/* <BarChart /> */}
-            <div className="container-fluid sticky-top">
+            <div className="container-fluid sticky-top mt-2">
                 <div className="row py-3"
                     style={{
                         backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -321,8 +321,8 @@ const Members = () => {
                     </div>
 
                     {/*  */}
-                    <div className="row">
-                        <div className="col-sm d-flex  justify-content-start align-items-center">
+                    <div className="row ">
+                        <div className="col-sm d-flex  justify-content-center align-items-center">
 
 
 
@@ -332,25 +332,18 @@ const Members = () => {
                                 </span>
                             </span>
 
-                            {/* <span className="badge bg-primary m-2 position-relative p-2 form-control" onClick={graduateFetch}>สำเร็จการศึกษา
-                                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-                                    {graduate}
 
-                                </span>
-                            </span> */}
 
                         </div>
 
                     </div>
                     <div className="row">
-                        <div className="col-sm d-flex justify-content-start align-items-center">
+                        <div className="col-sm d-flex flex-wrap justify-content-between align-items-center">
 
                             {/* studentStatus from api */}
 
-
-
                             {studentStatus.map((status, index) => (
-                                <span key={index} className={`badge ${checkStatusColor(status.status)} m-2 position-relative p-2 form-control`} onClick={() => setMembers(status.Members)}>{status.statusname} {' '}
+                                <span key={index} className={`badge ${checkStatusColor(status.status)} m-2 position-relative p-2 `} style={{ width: '100px' }} onClick={() => setMembers(status.Members)}>{status.statusname} {' '}
                                     <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                                         {status.count}
 
@@ -376,7 +369,7 @@ const Members = () => {
             }}>
                 {/* <StudentChart memberSummary={memberSummary} /> */}
                 <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm    mt-2">
+                    <div className="col-lg-6 col-md-6 col-sm mt-2 d-flex flex-wrap justify-content-start p-2 ">
 
 
                         {memberSummary.confirmallnum !== 0 &&
@@ -410,25 +403,25 @@ const Members = () => {
                         }
 
                         {memberSummary.notregispreservnum !== 0 &&
-                            <span className={`badge bg-warning position-relative   py-2    my-1 m-2  ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notregispreservnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>{memberSummary.notregispreservnum}</span></span>
+                            <span className={`badge bg-warning text-dark position-relative py-2 my-2 m-2    ${memberSummary.notregispreservnum === 0 ? 'disabled' : ''}`} onClick={notregispreservnum}> ไม่รักษาสภาพ  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger' style={{ zIndex: '999' }}>{memberSummary.notregispreservnum}</span></span>
                         }
 
 
                         {memberSummary.preservnum !== 0 &&
-                            <span className={`badge bg-dark      position-relative py-2   ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
+                            <span className={`badge bg-dark  position-relative py-2 my-2  ${memberSummary.preservnum === 0 ? 'disabled' : ''}`}
                                 onClick={preservnum}
                             >รักษาสภาพ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.preservnum}</span></span>
                         }
 
 
                         {memberSummary.withdrawallnum !== 0 &&
-                            <span className={`badge btn-primary    position-relative py-2 my-1 m-2  ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
+                            <span className={`badge btn-primary position-relative py-2 my-2  ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
                         }
 
 
 
                         {memberSummary.notwithdrawallnum !== 0 ?
-                            <span className={`badge bg-danger      position-relative py-2 my-1 m-2  m-2  px-2 ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></span>
+                            <span className={`badge bg-danger  position-relative py-2 my-2 m-2 ${memberSummary.notwithdrawallnum === 0 ? 'disabled' : ''}`} onClick={notwithdrawall}>ถอนรายวิชาไม่สำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.notwithdrawallnum}</span></span>
                             : null
                         }
 
@@ -444,7 +437,7 @@ const Members = () => {
 
                         {memberSummary.paidsuccessnum !== 0 &&
 
-                            <span className={`badge btn-primary      position-relative py-2 my-1 m-2  px-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
+                            <span className={`badge btn-primary  position-relative py-2 my-2 m-2 ${memberSummary.paidsuccessnum === 0 ? 'disabled' : ''}`}
                                 onClick={paidsuccessnum}>ชำระค่าเทอมครบ <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.paidsuccessnum}</span></span>
                         }
 

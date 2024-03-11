@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import McasLogo from '../assets/logo80.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Student from './Student';
 import io from 'socket.io-client'
 
@@ -185,6 +185,9 @@ const MyNavbar = () => {
                                     </LinkContainer>
                                     <LinkContainer to="/about">
                                         <Nav.Link><FontAwesomeIcon icon={faCircleInfo} />{' '}ผู้พัฒนาระบบ</Nav.Link>
+                                    </LinkContainer>
+                                    <LinkContainer to="/searchstudent">
+                                        <Nav.Link><FontAwesomeIcon icon={faSearch} />{' '}ค้นข้อมูลนักศึกษา</Nav.Link>
                                     </LinkContainer>
                                 </Nav>
                             )}

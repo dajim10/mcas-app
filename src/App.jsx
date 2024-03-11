@@ -20,6 +20,7 @@ import Chat from './components/Chat';
 import StudentCourse from './components/StudentCourse';
 import PdfMerge from './components/PdfMerge';
 import CourseWithdraw from './components/CourseWithdraw';
+import SearchStudent from './components/SearchStudent';
 
 
 
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="/chat" element={<Chat />} />
           <Route path="/studentcourse" element={<StudentCourse />} />
           <Route path="/pdfmerge" element={<PdfMerge />} />
+          <Route path="/searchstudent" element={<SearchStudent />} />
         </Routes>
       </Container>
 

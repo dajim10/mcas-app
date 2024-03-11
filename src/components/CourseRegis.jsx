@@ -114,11 +114,11 @@ const CourseRegis = () => {
                             <p className='text-center mb-2'>รายวิชาลงทะเบียน {studentData.text2}</p>
                             <Accordion>
                                 {studentData.course?.map((item, index) =>
-                                    <Accordion.Item eventKey={index}>
+                                    <Accordion.Item eventKey={index} key={index}>
                                         <>
                                             <Accordion.Header key={index} >
                                                 <span className="badge bg-primary mx-2 rounded-pill">{index + 1}</span>
-                                                <span className='badge bg-dark text-wrap' style={{ width: '100%', textAlign: 'left' }}>{item.coursename}</span>
+                                                <span className='badge bg-dark text-wrap' style={{ width: 'auto', textAlign: 'left' }}>{item.coursename}</span>
                                                 {confirmStatus(item.coursestatus)
                                                 }
                                             </Accordion.Header>
