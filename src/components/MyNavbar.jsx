@@ -1,13 +1,14 @@
 // MyNavbar.js
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'
 import McasLogo from '../assets/logo80.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faHouse, faGraduationCap, faRightFromBracket, faKey, faCircleInfo, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faGraduationCap, faRightFromBracket, faChartSimple, faCircleInfo, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Student from './Student';
 import io from 'socket.io-client'
+import { set } from 'mongoose';
 
 
 
@@ -21,8 +22,27 @@ const MyNavbar = () => {
     const [userName, setUserName] = useState('')
     const [room, setRoom] = useState('')
     const [smallScreen, setSmallScreen] = useState(false)
+    const [statMenu, setStatMenu] = useState(false);
 
 
+    const checkToken = async () => {
+        if (token) {
+            await fetch(`${import.meta.env.VITE_API_URL}/elogin/token/${token}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok' && data.chiefcode !== '') {
+                        setStatMenu(true)
+                    } else {
+                        setStatMenu(false)
+                    }
+                })
+        }
+    }
 
 
     // const socket = io.connect('http://localhost:3000')
@@ -55,6 +75,7 @@ const MyNavbar = () => {
 
 
     useEffect(() => {
+        checkToken();
         // Check if the user is logged in
         if (token) {
             setLoggedIn(true);
@@ -149,7 +170,7 @@ const MyNavbar = () => {
 
 
                 // <Navbar expand="lg" className={`${smallScreen === true ? 'fixed-bottom bg-success bg-gradient' : 'sticky-top'}`}
-                <Navbar expand="lg" className='sticky-top'
+                <Navbar expand="lg" className={`sticky-top`}
                     style={{
                         backgroundColor: 'rgb(255,255,255)'
                         , boxShadow: '0 0 10px #00000040'
@@ -189,6 +210,13 @@ const MyNavbar = () => {
                                     <LinkContainer to="/searchstudent">
                                         <Nav.Link><FontAwesomeIcon icon={faSearch} />{' '}ค้นข้อมูลนักศึกษา</Nav.Link>
                                     </LinkContainer>
+                                    {statMenu && (
+                                        <LinkContainer to="/statistics" >
+
+                                            <Nav.Link><FontAwesomeIcon icon={faChartSimple} />{' '}สถิติ</Nav.Link>
+                                        </LinkContainer>)}
+
+
                                 </Nav>
                             )}
                             <Nav>

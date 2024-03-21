@@ -21,6 +21,8 @@ import StudentCourse from './components/StudentCourse';
 import PdfMerge from './components/PdfMerge';
 import CourseWithdraw from './components/CourseWithdraw';
 import SearchStudent from './components/SearchStudent';
+import Statistics from './components/Statistics';
+import StudentStatus from './components/StudentStatus';
 
 
 
@@ -87,6 +89,8 @@ const App = () => {
           <Route path="/studentcourse" element={<StudentCourse />} />
           <Route path="/pdfmerge" element={<PdfMerge />} />
           <Route path="/searchstudent" element={<SearchStudent />} />
+          <Route path="/statistics" element={<Statistics token={token} />} />
+          <Route path="/studentstatus" element={<StudentStatus />} />
         </Routes>
       </Container>
 

@@ -415,7 +415,7 @@ const Members = () => {
 
 
                         {memberSummary.withdrawallnum !== 0 &&
-                            <span className={`badge btn-primary position-relative py-2 my-2  ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ : <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
+                            <span className={`badge btn-primary position-relative py-2 my-2  ${memberSummary.withdrawallnum === 0 ? 'disabled' : ''}`} onClick={withdrawallnum}>ถอนรายวิชาสำเร็จ<span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>{memberSummary.withdrawallnum}</span></span>
                         }
 
 
