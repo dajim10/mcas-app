@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import ClassRoomList from './ClassRoomList';
-import { Swal } from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 
 
@@ -33,8 +33,13 @@ const Home = () => {
                 navigate('/login');
                 return;
             }
-            if (data.class.length === 0) {
-                alert('ระบบนี้ใช้เฉพาะอาจารย์ที่ปรึกษาเท่านั้น');
+            if (data.class.length === 0 && token.split(':')[0] !== `${import.meta.env.VITE_API_SUPER_USER}`) {
+                // alert('ระบบนี้ใช้เฉพาะอาจารย์ที่ปรึกษาเท่านั้น');
+                Swal.fire({
+                    title: 'ระบบนี้ใช้เฉพาะอาจารย์ที่ปรึกษาเท่านั้น',
+                    icon: 'warning',
+                    confirmButtonText: 'Cool'
+                })
                 return;
             }
 

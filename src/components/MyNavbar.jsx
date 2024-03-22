@@ -23,6 +23,7 @@ const MyNavbar = () => {
     const [room, setRoom] = useState('')
     const [smallScreen, setSmallScreen] = useState(false)
     const [statMenu, setStatMenu] = useState(false);
+    const [superUser, setSuperUser] = useState(false);
 
 
     const checkToken = async () => {
@@ -35,12 +36,13 @@ const MyNavbar = () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'ok' && data.chiefcode !== '') {
+                    if (data.status === 'ok' && data.chiefcode !== '' || token.split(':')[0] === `${import.meta.env.VITE_API_SUPER_USER}`) {
                         setStatMenu(true)
                     } else {
                         setStatMenu(false)
                     }
                 })
+
         }
     }
 
@@ -76,9 +78,13 @@ const MyNavbar = () => {
 
     useEffect(() => {
         checkToken();
+        // setSuperUser(token.split(':')[0] === `${import.meta.env.VITE_API_SUPER_USER}` ? true : false)
+        // alert(superUser);
         // Check if the user is logged in
         if (token) {
             setLoggedIn(true);
+            console.log(token.split(':')[0]);
+
 
 
         } else {
@@ -91,6 +97,7 @@ const MyNavbar = () => {
     const handleLogout = () => {
         // Implement logout logic (clear session, reset state, etc.)
         localStorage.removeItem('token');
+        localStorage.removeItem('type');
         // localStorage.removeItem('type')
         setLoggedIn(false);
     }
@@ -211,12 +218,18 @@ const MyNavbar = () => {
                                         <Nav.Link><FontAwesomeIcon icon={faSearch} />{' '}ค้นข้อมูลนักศึกษา</Nav.Link>
                                     </LinkContainer>
                                     {statMenu && (
-                                        <LinkContainer to="/statistics" >
+                                        <LinkContainer to="/datafetcher" >
 
                                             <Nav.Link><FontAwesomeIcon icon={faChartSimple} />{' '}สถิติ</Nav.Link>
                                         </LinkContainer>)}
 
+                                    {/* {statMenu && (
+                                        <LinkContainer to="/datafetcher" >
 
+                                            <Nav.Link><FontAwesomeIcon icon={faChartSimple} />{' '}ทดสอบกราฟ</Nav.Link>
+                                        </LinkContainer>)
+
+                                    } */}
                                 </Nav>
                             )}
                             <Nav>

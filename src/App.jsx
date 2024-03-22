@@ -23,6 +23,9 @@ import CourseWithdraw from './components/CourseWithdraw';
 import SearchStudent from './components/SearchStudent';
 import Statistics from './components/Statistics';
 import StudentStatus from './components/StudentStatus';
+import DataFetcher from './components/DataFetcher';
+
+
 
 
 
@@ -91,6 +94,7 @@ const App = () => {
           <Route path="/searchstudent" element={<SearchStudent />} />
           <Route path="/statistics" element={<Statistics token={token} />} />
           <Route path="/studentstatus" element={<StudentStatus />} />
+          <Route path="/datafetcher" element={<DataFetcher token={token} />} />
         </Routes>
       </Container>
 
